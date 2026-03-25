@@ -80,19 +80,6 @@ class CharacterSelectScene: SKScene {
         girlLabel.position = CGPoint(x: 0, y: -100)
         girlContainer.addChild(girlLabel)
 
-        // Robot companion preview
-        let robotPreview = NodeFactory.makeRobot()
-        robotPreview.setScale(1.5)
-        robotPreview.position = CGPoint(x: size.width / 2, y: 130)
-        addChild(robotPreview)
-
-        let robotLabel = SKLabelNode(text: "Rehber Robot - Seni her yerde takip edecek!")
-        robotLabel.fontName = Constants.fontNameRegular
-        robotLabel.fontSize = 14
-        robotLabel.fontColor = ColorPalette.robotAccent
-        robotLabel.position = CGPoint(x: size.width / 2, y: 70)
-        addChild(robotLabel)
-
         // Selection indicator
         let indicator = SKShapeNode(rectOf: CGSize(width: 210, height: 290), cornerRadius: 18)
         indicator.fillColor = .clear
@@ -104,15 +91,28 @@ class CharacterSelectScene: SKScene {
         selectionIndicator = indicator
         updateSelection()
 
+        // Robot companion preview + label (bottom center area)
+        let robotPreview = NodeFactory.makeRobot()
+        robotPreview.setScale(1.2)
+        robotPreview.position = CGPoint(x: size.width / 2, y: size.height * 0.18)
+        addChild(robotPreview)
+
+        let robotLabel = SKLabelNode(text: "Rehber Robot - Seni her yerde takip edecek!")
+        robotLabel.fontName = Constants.fontNameRegular
+        robotLabel.fontSize = 13
+        robotLabel.fontColor = ColorPalette.robotAccent
+        robotLabel.position = CGPoint(x: size.width / 2, y: size.height * 0.10)
+        addChild(robotLabel)
+
         // Back button
         let backButton = NodeFactory.makeButton(text: "Geri", size: CGSize(width: 140, height: 45))
-        backButton.position = CGPoint(x: 100, y: 40)
+        backButton.position = CGPoint(x: size.width * 0.15, y: size.height * 0.18)
         backButton.name = "backButton"
         addChild(backButton)
 
         // Confirm button
         let confirmButton = NodeFactory.makeButton(text: "Onayla", size: CGSize(width: 160, height: 50))
-        confirmButton.position = CGPoint(x: size.width - 120, y: 40)
+        confirmButton.position = CGPoint(x: size.width * 0.85, y: size.height * 0.18)
         confirmButton.name = "confirmButton"
         addChild(confirmButton)
     }
