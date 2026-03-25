@@ -58,7 +58,8 @@ class PlayerCharacter: SKNode {
 
     func jump() {
         guard isGrounded, let body = physicsBody else { return }
-        body.velocity.dy = Constants.playerJumpImpulse
+        body.velocity.dy = 0 // Reset before impulse
+        body.applyImpulse(CGVector(dx: 0, dy: Constants.playerJumpImpulse * body.mass))
         isGrounded = false
         AudioManager.shared.playJumpSound(on: self)
     }
@@ -91,6 +92,11 @@ class PlayerCharacter: SKNode {
         // Clamp vertical velocity
         if let body = physicsBody {
             body.velocity.dy = body.velocity.dy.clamped(to: -Constants.maxPlayerVelocityY...Constants.maxPlayerVelocityY)
+
+            // Ground detection: if vertical velocity is near zero, consider grounded
+            if abs(body.velocity.dy) < 5.0 && position.y <= Constants.groundHeight + 70 {
+                isGrounded = true
+            }
         }
 
         // Simple walk animation

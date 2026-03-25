@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Player input
         let input = touchControls.inputState
         player.applyMovement(direction: input.horizontalDirection)
-        if input.jumpPressed && input.jumpJustPressed {
+        if input.jumpPressed {
             player.jump()
         }
 
