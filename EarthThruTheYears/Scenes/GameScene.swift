@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var isPaused2 = false // avoid conflict with SKScene.isPaused
     private var previousGoldForExtraLife: Int = 0
 
-    init(size: CGSize) {
+    override init(size: CGSize) {
         self.levelData = LevelCatalog.level(era: GameManager.shared.currentEra,
                                              subLevel: GameManager.shared.currentLevel)
         super.init(size: size)

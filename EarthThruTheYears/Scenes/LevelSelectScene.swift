@@ -4,7 +4,7 @@ class LevelSelectScene: SKScene {
 
     private let era: Era
 
-    init(size: CGSize) {
+    override init(size: CGSize) {
         self.era = GameManager.shared.currentEra
         super.init(size: size)
     }
