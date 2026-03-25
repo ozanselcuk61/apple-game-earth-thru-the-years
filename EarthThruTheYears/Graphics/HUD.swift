@@ -76,10 +76,18 @@ class HUD: SKNode {
         updateLevel(era: .triassic, level: 1)
     }
 
+    private var currentDisplayedLives: Int = -1
+
     func updateLives(_ lives: Int) {
-        // Remove old hearts
+        guard lives != currentDisplayedLives else { return }
+        currentDisplayedLives = lives
+
+        // Remove old hearts and labels
         heartNodes.forEach { $0.removeFromParent() }
         heartNodes.removeAll()
+        for i in 0..<10 {
+            childNode(withName: "heartLabel_\(i)")?.removeFromParent()
+        }
 
         for i in 0..<lives {
             let heart = SKShapeNode(rectOf: CGSize(width: 18, height: 16), cornerRadius: 4)
@@ -101,7 +109,11 @@ class HUD: SKNode {
         livesLabel.text = "x\(lives)"
     }
 
+    private var currentDisplayedGold: Int = -1
+
     func updateGold(_ gold: Int) {
+        guard gold != currentDisplayedGold else { return }
+        currentDisplayedGold = gold
         goldLabel.text = " \(gold)"
     }
 
@@ -114,14 +126,20 @@ class HUD: SKNode {
         progressFillBar.xScale = clampedProgress
     }
 
+    private var currentGoldReqValue: Int = -1
+
     func showGoldRequirement(current: Int, required: Int) {
+        guard current != currentGoldReqValue else { return }
+        currentGoldReqValue = current
+
+        childNode(withName: "goldReq")?.removeFromParent()
+
         let reqLabel = SKLabelNode(text: "Gereken Altın: \(current)/\(required)")
         reqLabel.fontName = Constants.fontNameRegular
         reqLabel.fontSize = 14
         reqLabel.fontColor = current >= required ? .green : ColorPalette.goldColor
         reqLabel.position = CGPoint(x: 0, y: 275)
         reqLabel.name = "goldReq"
-        childNode(withName: "goldReq")?.removeFromParent()
         addChild(reqLabel)
     }
 
