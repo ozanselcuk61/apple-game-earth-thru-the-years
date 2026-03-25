@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000001; };
+		A10000002 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000002; };
+		A10000003 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000003; };
+		A10000004 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000004; };
+		A10000005 /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000005; };
+		A10000006 /* PhysicsCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000006; };
+		A10000007 /* HealthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000007; };
+		A10000008 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000008; };
+		A10000009 /* SaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000009; };
+		A10000010 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010; };
+		A10000011 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000011; };
+		A10000012 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000012; };
+		A10000013 /* NodeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000013; };
+		A10000014 /* ParallaxBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000014; };
+		A10000015 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000015; };
+		A10000016 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000016; };
+		A10000017 /* TouchControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000017; };
+		A10000018 /* PlayerCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000018; };
+		A10000019 /* RobotCompanion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000019; };
+		A10000020 /* Dinosaur.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020; };
+		A10000021 /* DinosaurFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000021; };
+		A10000022 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000022; };
+		A10000023 /* PowerUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000023; };
+		A10000024 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000024; };
+		A10000025 /* LevelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000025; };
+		A10000026 /* TileMapBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000026; };
+		A10000027 /* LevelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000027; };
+		A10000028 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000028; };
+		A10000029 /* CharacterSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000029; };
+		A10000030 /* EraSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000030; };
+		A10000031 /* LevelSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000031; };
+		A10000032 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000032; };
+		A10000033 /* LevelCompleteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000033; };
+		A10000034 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000034; };
+		A10000035 /* MarketScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000035; };
+		A10000036 /* OptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000036; };
+		A10000037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000037; };
+		A10000038 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B10000038; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B10000000 /* EarthThruTheYears.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EarthThruTheYears.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B10000002 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		B10000003 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B10000004 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		B10000005 /* SKNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
+		B10000006 /* PhysicsCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategories.swift; sourceTree = "<group>"; };
+		B10000007 /* HealthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthComponent.swift; sourceTree = "<group>"; };
+		B10000008 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		B10000009 /* SaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
+		B10000010 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		B10000011 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		B10000012 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		B10000013 /* NodeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFactory.swift; sourceTree = "<group>"; };
+		B10000014 /* ParallaxBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxBackground.swift; sourceTree = "<group>"; };
+		B10000015 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		B10000016 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
+		B10000017 /* TouchControlManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlManager.swift; sourceTree = "<group>"; };
+		B10000018 /* PlayerCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCharacter.swift; sourceTree = "<group>"; };
+		B10000019 /* RobotCompanion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotCompanion.swift; sourceTree = "<group>"; };
+		B10000020 /* Dinosaur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dinosaur.swift; sourceTree = "<group>"; };
+		B10000021 /* DinosaurFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinosaurFactory.swift; sourceTree = "<group>"; };
+		B10000022 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		B10000023 /* PowerUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerUp.swift; sourceTree = "<group>"; };
+		B10000024 /* LevelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
+		B10000025 /* LevelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCatalog.swift; sourceTree = "<group>"; };
+		B10000026 /* TileMapBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileMapBuilder.swift; sourceTree = "<group>"; };
+		B10000027 /* LevelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelBuilder.swift; sourceTree = "<group>"; };
+		B10000028 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		B10000029 /* CharacterSelectScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSelectScene.swift; sourceTree = "<group>"; };
+		B10000030 /* EraSelectScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EraSelectScene.swift; sourceTree = "<group>"; };
+		B10000031 /* LevelSelectScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectScene.swift; sourceTree = "<group>"; };
+		B10000032 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B10000033 /* LevelCompleteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompleteScene.swift; sourceTree = "<group>"; };
+		B10000034 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		B10000035 /* MarketScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketScene.swift; sourceTree = "<group>"; };
+		B10000036 /* OptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsScene.swift; sourceTree = "<group>"; };
+		B10000037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10000038 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B10000039 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C10000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D10000000 = {
+			isa = PBXGroup;
+			children = (
+				D10000001 /* EarthThruTheYears */,
+				D10000099 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D10000001 /* EarthThruTheYears */ = {
+			isa = PBXGroup;
+			children = (
+				D10000002 /* App */,
+				D10000003 /* Scenes */,
+				D10000004 /* Entities */,
+				D10000005 /* Components */,
+				D10000006 /* Levels */,
+				D10000007 /* Graphics */,
+				D10000008 /* Input */,
+				D10000009 /* Managers */,
+				D10000010 /* Utils */,
+				B10000037 /* Assets.xcassets */,
+			);
+			path = EarthThruTheYears;
+			sourceTree = "<group>";
+		};
+		D10000002 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B10000001 /* AppDelegate.swift */,
+				B10000002 /* GameViewController.swift */,
+				B10000039 /* Info.plist */,
+				B10000038 /* LaunchScreen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D10000003 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B10000028 /* MainMenuScene.swift */,
+				B10000029 /* CharacterSelectScene.swift */,
+				B10000030 /* EraSelectScene.swift */,
+				B10000031 /* LevelSelectScene.swift */,
+				B10000032 /* GameScene.swift */,
+				B10000033 /* LevelCompleteScene.swift */,
+				B10000034 /* GameOverScene.swift */,
+				B10000035 /* MarketScene.swift */,
+				B10000036 /* OptionsScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		D10000004 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				B10000018 /* PlayerCharacter.swift */,
+				B10000019 /* RobotCompanion.swift */,
+				B10000020 /* Dinosaur.swift */,
+				B10000021 /* DinosaurFactory.swift */,
+				B10000022 /* Coin.swift */,
+				B10000023 /* PowerUp.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		D10000005 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B10000006 /* PhysicsCategories.swift */,
+				B10000007 /* HealthComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D10000006 /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				B10000024 /* LevelData.swift */,
+				B10000025 /* LevelCatalog.swift */,
+				B10000026 /* TileMapBuilder.swift */,
+				B10000027 /* LevelBuilder.swift */,
+			);
+			path = Levels;
+			sourceTree = "<group>";
+		};
+		D10000007 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				B10000012 /* ColorPalette.swift */,
+				B10000013 /* NodeFactory.swift */,
+				B10000014 /* ParallaxBackground.swift */,
+				B10000015 /* HUD.swift */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		D10000008 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				B10000016 /* InputState.swift */,
+				B10000017 /* TouchControlManager.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		D10000009 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B10000008 /* GameManager.swift */,
+				B10000009 /* SaveManager.swift */,
+				B10000010 /* AudioManager.swift */,
+				B10000011 /* CameraManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D10000010 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B10000003 /* Constants.swift */,
+				B10000004 /* CGFloat+Extensions.swift */,
+				B10000005 /* SKNode+Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D10000099 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000 /* EarthThruTheYears.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E10000001 /* EarthThruTheYears */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F10000003 /* Build configuration list for PBXNativeTarget "EarthThruTheYears" */;
+			buildPhases = (
+				E10000002 /* Sources */,
+				C10000001 /* Frameworks */,
+				E10000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthThruTheYears;
+			productName = EarthThruTheYears;
+			productReference = B10000000 /* EarthThruTheYears.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E10000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					E10000001 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = F10000001 /* Build configuration list for PBXProject "EarthThruTheYears" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				tr,
+			);
+			mainGroup = D10000000;
+			productRefGroup = D10000099 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E10000001 /* EarthThruTheYears */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E10000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000037 /* Assets.xcassets in Resources */,
+				A10000038 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E10000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000001 /* AppDelegate.swift in Sources */,
+				A10000002 /* GameViewController.swift in Sources */,
+				A10000003 /* Constants.swift in Sources */,
+				A10000004 /* CGFloat+Extensions.swift in Sources */,
+				A10000005 /* SKNode+Extensions.swift in Sources */,
+				A10000006 /* PhysicsCategories.swift in Sources */,
+				A10000007 /* HealthComponent.swift in Sources */,
+				A10000008 /* GameManager.swift in Sources */,
+				A10000009 /* SaveManager.swift in Sources */,
+				A10000010 /* AudioManager.swift in Sources */,
+				A10000011 /* CameraManager.swift in Sources */,
+				A10000012 /* ColorPalette.swift in Sources */,
+				A10000013 /* NodeFactory.swift in Sources */,
+				A10000014 /* ParallaxBackground.swift in Sources */,
+				A10000015 /* HUD.swift in Sources */,
+				A10000016 /* InputState.swift in Sources */,
+				A10000017 /* TouchControlManager.swift in Sources */,
+				A10000018 /* PlayerCharacter.swift in Sources */,
+				A10000019 /* RobotCompanion.swift in Sources */,
+				A10000020 /* Dinosaur.swift in Sources */,
+				A10000021 /* DinosaurFactory.swift in Sources */,
+				A10000022 /* Coin.swift in Sources */,
+				A10000023 /* PowerUp.swift in Sources */,
+				A10000024 /* LevelData.swift in Sources */,
+				A10000025 /* LevelCatalog.swift in Sources */,
+				A10000026 /* TileMapBuilder.swift in Sources */,
+				A10000027 /* LevelBuilder.swift in Sources */,
+				A10000028 /* MainMenuScene.swift in Sources */,
+				A10000029 /* CharacterSelectScene.swift in Sources */,
+				A10000030 /* EraSelectScene.swift in Sources */,
+				A10000031 /* LevelSelectScene.swift in Sources */,
+				A10000032 /* GameScene.swift in Sources */,
+				A10000033 /* LevelCompleteScene.swift in Sources */,
+				A10000034 /* GameOverScene.swift in Sources */,
+				A10000035 /* MarketScene.swift in Sources */,
+				A10000036 /* OptionsScene.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F10000010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F10000011 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F10000020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EarthThruTheYears/App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.earththrutheyears.game;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F10000021 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EarthThruTheYears/App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.earththrutheyears.game;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F10000001 /* Build configuration list for PBXProject "EarthThruTheYears" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F10000010 /* Debug */,
+				F10000011 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F10000003 /* Build configuration list for PBXNativeTarget "EarthThruTheYears" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F10000020 /* Debug */,
+				F10000021 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E10000000 /* Project object */;
+}
