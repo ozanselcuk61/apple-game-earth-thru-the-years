@@ -67,13 +67,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func setupPlayer() {
         player = PlayerCharacter(type: GameManager.shared.selectedCharacter)
-        player.position = CGPoint(x: 150, y: Constants.groundHeight + 60)
+        player.position = CGPoint(x: 150, y: Constants.groundHeight + 5)
         addChild(player)
     }
 
     private func setupRobot() {
         robot = RobotCompanion(target: player)
-        robot.position = CGPoint(x: 100, y: Constants.groundHeight + 70)
+        robot.position = CGPoint(x: 100, y: Constants.groundHeight + 20)
         addChild(robot)
     }
 
@@ -281,7 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if GameManager.shared.loseLife() {
             // Respawn player
-            player.position = CGPoint(x: max(150, player.position.x - 300), y: Constants.groundHeight + 100)
+            player.position = CGPoint(x: max(150, player.position.x - 300), y: Constants.groundHeight + 30)
             player.physicsBody?.velocity = .zero
             player.health.setLives(GameManager.shared.lives)
             hud.updateLives(GameManager.shared.lives)

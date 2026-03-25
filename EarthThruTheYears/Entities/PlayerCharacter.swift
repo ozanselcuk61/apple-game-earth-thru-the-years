@@ -27,14 +27,11 @@ class PlayerCharacter: SKNode {
         visual.name = "visual"
         addChild(visual)
 
-        // Physics body - capsule shape (circle bottom + rect top) to prevent
-        // catching on ground segment seams
-        let circleRadius: CGFloat = 14
-        let rectHeight: CGFloat = 32
-        let circleBody = SKPhysicsBody(circleOfRadius: circleRadius, center: CGPoint(x: 0, y: circleRadius))
-        let rectBody = SKPhysicsBody(rectangleOf: CGSize(width: 26, height: rectHeight),
-                                      center: CGPoint(x: 0, y: circleRadius * 2 + rectHeight / 2))
-        let body = SKPhysicsBody(bodies: [circleBody, rectBody])
+        // Physics body - circle at feet to slide over ground edges
+        let bodyHeight: CGFloat = 60
+        let bodyWidth: CGFloat = 30
+        let circleRadius: CGFloat = bodyWidth / 2
+        let body = SKPhysicsBody(circleOfRadius: circleRadius, center: CGPoint(x: 0, y: circleRadius))
         body.categoryBitMask = PhysicsCategory.player
         body.contactTestBitMask = PhysicsCategory.coin | PhysicsCategory.enemy | PhysicsCategory.powerUp |
                                    PhysicsCategory.boundary | PhysicsCategory.endFlag
@@ -99,7 +96,7 @@ class PlayerCharacter: SKNode {
             body.velocity.dy = body.velocity.dy.clamped(to: -Constants.maxPlayerVelocityY...Constants.maxPlayerVelocityY)
 
             // Ground detection: if vertical velocity is near zero, consider grounded
-            if abs(body.velocity.dy) < 5.0 && position.y <= Constants.groundHeight + 70 {
+            if abs(body.velocity.dy) < 8.0 {
                 isGrounded = true
             }
         }

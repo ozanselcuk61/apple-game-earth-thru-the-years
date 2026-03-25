@@ -5,10 +5,10 @@ enum Constants {
     static let sceneSize = CGSize(width: 1334, height: 750)
 
     // Physics
-    static let gravity: CGFloat = -20.0
-    static let playerMoveSpeed: CGFloat = 350.0
-    static let playerJumpImpulse: CGFloat = 620.0
-    static let maxPlayerVelocityY: CGFloat = 800.0
+    static let gravity: CGFloat = -18.0
+    static let playerMoveSpeed: CGFloat = 380.0
+    static let playerJumpImpulse: CGFloat = 700.0
+    static let maxPlayerVelocityY: CGFloat = 900.0
 
     // Gameplay
     static let startingLives = 3
@@ -20,7 +20,7 @@ enum Constants {
 
     // Tile sizes
     static let tileSize: CGFloat = 50.0
-    static let groundHeight: CGFloat = 100.0
+    static let groundHeight: CGFloat = 120.0
 
     // Coin
     static let coinSize: CGFloat = 30.0

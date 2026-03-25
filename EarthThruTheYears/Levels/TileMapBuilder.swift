@@ -28,7 +28,7 @@ class TileMapBuilder {
 
             if hasGap {
                 // Gap - keep narrow enough for player to jump across
-                let gapWidth = CGFloat(random.nextInt(upperBound: 2) + 1) * tileSize + 20 // 70-120 points
+                let gapWidth = CGFloat(random.nextInt(upperBound: 2) + 1) * tileSize // 50-100 points
                 x += gapWidth
 
                 // Add boundary for death pit
@@ -106,7 +106,7 @@ class TileMapBuilder {
         startBody.collisionBitMask = PhysicsCategory.player | PhysicsCategory.enemy
         startBody.contactTestBitMask = PhysicsCategory.player
         startBody.isDynamic = false
-        startBody.friction = 0.7
+        startBody.friction = 0.3
         startGround.physicsBody = startBody
         nodes.insert(startGround, at: 0)
 
@@ -123,7 +123,7 @@ class TileMapBuilder {
         for i in 0..<count {
             let width = CGFloat(random.nextInt(upperBound: 4) + 3) * tileSize
             let x = spacing * CGFloat(i + 1) + CGFloat(random.nextInt(upperBound: 80) - 40)
-            let y = Constants.groundHeight + CGFloat(random.nextInt(upperBound: 150) + 80)
+            let y = Constants.groundHeight + CGFloat(random.nextInt(upperBound: 80) + 50)
 
             let platform = SKSpriteNode(color: colors.platform, size: CGSize(width: width, height: 18))
             platform.position = CGPoint(x: x, y: y)

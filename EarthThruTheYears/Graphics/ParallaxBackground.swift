@@ -38,13 +38,14 @@ class ParallaxBackground {
 
     private func createSkyLayer(colors: EraColors) -> SKNode {
         let node = SKNode()
+        let skyWidth = sceneSize.width * 20 // Wide enough for longest levels
         // Top half
-        let top = SKSpriteNode(color: colors.skyTop, size: CGSize(width: sceneSize.width * 3, height: sceneSize.height / 2))
-        top.position = CGPoint(x: sceneSize.width, y: sceneSize.height * 0.75)
+        let top = SKSpriteNode(color: colors.skyTop, size: CGSize(width: skyWidth, height: sceneSize.height / 2))
+        top.position = CGPoint(x: skyWidth / 2, y: sceneSize.height * 0.75)
         node.addChild(top)
         // Bottom half
-        let bottom = SKSpriteNode(color: colors.skyBottom, size: CGSize(width: sceneSize.width * 3, height: sceneSize.height / 2))
-        bottom.position = CGPoint(x: sceneSize.width, y: sceneSize.height * 0.25)
+        let bottom = SKSpriteNode(color: colors.skyBottom, size: CGSize(width: skyWidth, height: sceneSize.height / 2))
+        bottom.position = CGPoint(x: skyWidth / 2, y: sceneSize.height * 0.25)
         node.addChild(bottom)
         return node
     }

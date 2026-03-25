@@ -9,7 +9,9 @@ enum NodeFactory {
         root.name = "player"
 
         let sprite = SKSpriteNode(imageNamed: type == .boy ? "boy_idle" : "girl_idle")
-        sprite.setScale(2.0) // Scale up the pixel art
+        sprite.setScale(2.0)
+        sprite.anchorPoint = CGPoint(x: 0.5, y: 0) // Bottom-center anchor
+        sprite.position = CGPoint(x: 0, y: 0)
         root.addChild(sprite)
 
         return root

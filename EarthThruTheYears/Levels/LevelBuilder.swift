@@ -94,14 +94,14 @@ class LevelBuilder {
             let baseX = coinSpacing * CGFloat(i + 1) + CGFloat.random(in: -30...30)
             let x = baseX.clamped(to: 100...(levelWidth - 200))
 
-            // Place coins at varying heights
+            // Place coins at reachable heights
             let coinY: CGFloat
             if let nearPlatform = platforms.first(where: { abs($0.position.x - x) < 100 }) {
                 // Place above a nearby platform
-                coinY = nearPlatform.position.y + 50
+                coinY = nearPlatform.position.y + 35
             } else {
-                // Place above ground level
-                coinY = Constants.groundHeight + CGFloat.random(in: 40...120)
+                // Place above ground level - within jump reach
+                coinY = Constants.groundHeight + CGFloat.random(in: 30...80)
             }
 
             coin.position = CGPoint(x: x, y: coinY)
