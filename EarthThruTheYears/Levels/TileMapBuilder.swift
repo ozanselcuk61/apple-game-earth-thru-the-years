@@ -47,7 +47,7 @@ class TileMapBuilder {
             }
 
             segmentWidth = CGFloat(random.nextInt(upperBound: 6) + 4) * tileSize
-            let height = groundY + CGFloat(random.nextInt(upperBound: 3) - 1) * 10
+            let height = groundY // Flat ground to prevent edge-catching
 
             let ground = SKSpriteNode(color: colors.groundTop, size: CGSize(width: segmentWidth, height: height))
             ground.position = CGPoint(x: x + segmentWidth / 2, y: height / 2)
@@ -59,7 +59,7 @@ class TileMapBuilder {
             body.collisionBitMask = PhysicsCategory.player | PhysicsCategory.enemy
             body.contactTestBitMask = PhysicsCategory.player
             body.isDynamic = false
-            body.friction = 0.7
+            body.friction = 0.3
             ground.physicsBody = body
 
             nodes.append(ground)
@@ -114,7 +114,7 @@ class TileMapBuilder {
             body.collisionBitMask = PhysicsCategory.player | PhysicsCategory.enemy
             body.contactTestBitMask = PhysicsCategory.player
             body.isDynamic = false
-            body.friction = 0.7
+            body.friction = 0.3
             platform.physicsBody = body
 
             platforms.append(platform)

@@ -27,15 +27,20 @@ class PlayerCharacter: SKNode {
         visual.name = "visual"
         addChild(visual)
 
-        // Physics body
-        let bodySize = CGSize(width: 28, height: 56)
-        let body = SKPhysicsBody(rectangleOf: bodySize, center: CGPoint(x: 0, y: 28))
+        // Physics body - capsule shape (circle bottom + rect top) to prevent
+        // catching on ground segment seams
+        let circleRadius: CGFloat = 14
+        let rectHeight: CGFloat = 32
+        let circleBody = SKPhysicsBody(circleOfRadius: circleRadius, center: CGPoint(x: 0, y: circleRadius))
+        let rectBody = SKPhysicsBody(rectangleOf: CGSize(width: 26, height: rectHeight),
+                                      center: CGPoint(x: 0, y: circleRadius * 2 + rectHeight / 2))
+        let body = SKPhysicsBody(bodies: [circleBody, rectBody])
         body.categoryBitMask = PhysicsCategory.player
         body.contactTestBitMask = PhysicsCategory.coin | PhysicsCategory.enemy | PhysicsCategory.powerUp |
                                    PhysicsCategory.boundary | PhysicsCategory.endFlag
         body.collisionBitMask = PhysicsCategory.ground | PhysicsCategory.platform
         body.allowsRotation = false
-        body.friction = 0.2
+        body.friction = 0.0
         body.restitution = 0
         body.mass = 1.0
         physicsBody = body
