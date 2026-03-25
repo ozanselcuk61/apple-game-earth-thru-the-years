@@ -2,7 +2,7 @@ import CoreGraphics
 
 extension CGFloat {
     func clamped(to range: ClosedRange<CGFloat>) -> CGFloat {
-        return min(max(self, range.lowerBound), range.upperBound)
+        return Swift.min(Swift.max(self, range.lowerBound), range.upperBound)
     }
 
     static func lerp(from a: CGFloat, to b: CGFloat, t: CGFloat) -> CGFloat {
