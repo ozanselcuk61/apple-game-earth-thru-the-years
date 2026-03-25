@@ -136,7 +136,7 @@ class LevelSelectScene: SKScene {
 
         // Back button
         let backButton = NodeFactory.makeButton(text: "Geri", size: CGSize(width: 140, height: 45))
-        backButton.position = CGPoint(x: 120, y: 80)
+        backButton.position = CGPoint(x: 120, y: 110)
         backButton.name = "backButton"
         addChild(backButton)
     }

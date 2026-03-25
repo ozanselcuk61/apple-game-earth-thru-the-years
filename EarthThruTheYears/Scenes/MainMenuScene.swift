@@ -67,7 +67,7 @@ class MainMenuScene: SKScene {
         goldBg.fillColor = SKColor(white: 0.1, alpha: 0.6)
         goldBg.strokeColor = ColorPalette.goldColor.withAlphaComponent(0.5)
         goldBg.lineWidth = 1
-        goldBg.position = CGPoint(x: size.width - 100, y: size.height - 40)
+        goldBg.position = CGPoint(x: size.width - 100, y: size.height - 60)
         addChild(goldBg)
 
         let goldLabel = SKLabelNode(text: "💰 \(GameManager.shared.totalGold)")
@@ -75,7 +75,7 @@ class MainMenuScene: SKScene {
         goldLabel.fontSize = 18
         goldLabel.fontColor = ColorPalette.goldColor
         goldLabel.verticalAlignmentMode = .center
-        goldLabel.position = CGPoint(x: size.width - 100, y: size.height - 40)
+        goldLabel.position = CGPoint(x: size.width - 100, y: size.height - 60)
         addChild(goldLabel)
 
         // Character display
@@ -84,7 +84,7 @@ class MainMenuScene: SKScene {
         charLabel.fontName = Constants.fontNameRegular
         charLabel.fontSize = 14
         charLabel.fontColor = ColorPalette.textColor.withAlphaComponent(0.6)
-        charLabel.position = CGPoint(x: 120, y: size.height - 40)
+        charLabel.position = CGPoint(x: 120, y: size.height - 60)
         addChild(charLabel)
     }
 

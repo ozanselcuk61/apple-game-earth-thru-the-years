@@ -92,7 +92,7 @@ class LevelCompleteScene: SKScene {
         }
 
         let menuButton = NodeFactory.makeButton(text: "Bölüm Seçimi", size: CGSize(width: 220, height: 50))
-        menuButton.position = CGPoint(x: size.width / 2, y: 120)
+        menuButton.position = CGPoint(x: size.width / 2, y: 140)
         menuButton.name = "menuButton"
         addChild(menuButton)
     }

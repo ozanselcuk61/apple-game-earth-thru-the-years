@@ -50,12 +50,12 @@ class OptionsScene: SKScene {
         version.fontName = Constants.fontNameRegular
         version.fontSize = 12
         version.fontColor = SKColor(white: 0.5, alpha: 1)
-        version.position = CGPoint(x: size.width / 2, y: 80)
+        version.position = CGPoint(x: size.width / 2, y: 130)
         addChild(version)
 
         // Back button
         let backButton = NodeFactory.makeButton(text: "Geri", size: CGSize(width: 140, height: 45))
-        backButton.position = CGPoint(x: 120, y: 80)
+        backButton.position = CGPoint(x: 150, y: 110)
         backButton.name = "backButton"
         addChild(backButton)
     }

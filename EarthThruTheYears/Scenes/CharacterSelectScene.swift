@@ -94,25 +94,25 @@ class CharacterSelectScene: SKScene {
         // Robot companion preview + label (bottom center area)
         let robotPreview = NodeFactory.makeRobot()
         robotPreview.setScale(1.2)
-        robotPreview.position = CGPoint(x: size.width / 2, y: size.height * 0.18)
+        robotPreview.position = CGPoint(x: size.width / 2, y: 155)
         addChild(robotPreview)
 
         let robotLabel = SKLabelNode(text: "Rehber Robot - Seni her yerde takip edecek!")
         robotLabel.fontName = Constants.fontNameRegular
         robotLabel.fontSize = 13
         robotLabel.fontColor = ColorPalette.robotAccent
-        robotLabel.position = CGPoint(x: size.width / 2, y: size.height * 0.10)
+        robotLabel.position = CGPoint(x: size.width / 2, y: 100)
         addChild(robotLabel)
 
         // Back button
         let backButton = NodeFactory.makeButton(text: "Geri", size: CGSize(width: 140, height: 45))
-        backButton.position = CGPoint(x: size.width * 0.15, y: size.height * 0.18)
+        backButton.position = CGPoint(x: size.width * 0.15, y: 130)
         backButton.name = "backButton"
         addChild(backButton)
 
         // Confirm button
         let confirmButton = NodeFactory.makeButton(text: "Onayla", size: CGSize(width: 160, height: 50))
-        confirmButton.position = CGPoint(x: size.width * 0.85, y: size.height * 0.18)
+        confirmButton.position = CGPoint(x: size.width * 0.85, y: 130)
         confirmButton.name = "confirmButton"
         addChild(confirmButton)
     }

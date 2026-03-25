@@ -39,13 +39,13 @@ class GameOverScene: SKScene {
 
         // Retry button
         let retryButton = NodeFactory.makeButton(text: "Tekrar Dene", size: CGSize(width: 220, height: 55))
-        retryButton.position = CGPoint(x: size.width / 2, y: 220)
+        retryButton.position = CGPoint(x: size.width / 2, y: 240)
         retryButton.name = "retryButton"
         addChild(retryButton)
 
         // Menu button
         let menuButton = NodeFactory.makeButton(text: "Ana Menü", size: CGSize(width: 220, height: 50))
-        menuButton.position = CGPoint(x: size.width / 2, y: 140)
+        menuButton.position = CGPoint(x: size.width / 2, y: 160)
         menuButton.name = "menuButton"
         addChild(menuButton)
     }
