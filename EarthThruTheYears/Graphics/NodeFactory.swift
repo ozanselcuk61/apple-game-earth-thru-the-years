@@ -9,62 +9,142 @@ enum NodeFactory {
         root.name = "player"
 
         let bodyColor = type == .boy ? ColorPalette.boyColor : ColorPalette.girlColor
+        let darkerBody = bodyColor.withAlphaComponent(0.85)
 
-        // Body
-        let body = SKSpriteNode(color: bodyColor, size: CGSize(width: 28, height: 32))
-        body.position = CGPoint(x: 0, y: 16)
-        body.name = "body"
-        root.addChild(body)
+        // Shadow
+        let shadow = SKShapeNode(ellipseOf: CGSize(width: 26, height: 8))
+        shadow.fillColor = SKColor(white: 0, alpha: 0.2)
+        shadow.strokeColor = .clear
+        shadow.position = CGPoint(x: 0, y: -14)
+        root.addChild(shadow)
 
-        // Head
-        let head = SKShapeNode(circleOfRadius: 14)
-        head.fillColor = ColorPalette.skinColor
-        head.strokeColor = .clear
-        head.position = CGPoint(x: 0, y: 42)
-        head.name = "head"
-        root.addChild(head)
-
-        // Eyes
-        let leftEye = SKShapeNode(circleOfRadius: 3)
-        leftEye.fillColor = .black
-        leftEye.strokeColor = .clear
-        leftEye.position = CGPoint(x: -5, y: 44)
-        root.addChild(leftEye)
-
-        let rightEye = SKShapeNode(circleOfRadius: 3)
-        rightEye.fillColor = .black
-        rightEye.strokeColor = .clear
-        rightEye.position = CGPoint(x: 5, y: 44)
-        root.addChild(rightEye)
+        // Shoes
+        let leftShoe = SKSpriteNode(color: SKColor(red: 0.3, green: 0.2, blue: 0.1, alpha: 1), size: CGSize(width: 12, height: 6))
+        leftShoe.position = CGPoint(x: -7, y: -14)
+        root.addChild(leftShoe)
+        let rightShoe = SKSpriteNode(color: SKColor(red: 0.3, green: 0.2, blue: 0.1, alpha: 1), size: CGSize(width: 12, height: 6))
+        rightShoe.position = CGPoint(x: 7, y: -14)
+        root.addChild(rightShoe)
 
         // Legs
-        let leftLeg = SKSpriteNode(color: bodyColor.withAlphaComponent(0.8), size: CGSize(width: 10, height: 16))
-        leftLeg.position = CGPoint(x: -7, y: -8)
+        let leftLeg = SKSpriteNode(color: darkerBody, size: CGSize(width: 10, height: 16))
+        leftLeg.position = CGPoint(x: -7, y: -4)
         leftLeg.name = "leftLeg"
         root.addChild(leftLeg)
-
-        let rightLeg = SKSpriteNode(color: bodyColor.withAlphaComponent(0.8), size: CGSize(width: 10, height: 16))
-        rightLeg.position = CGPoint(x: 7, y: -8)
+        let rightLeg = SKSpriteNode(color: darkerBody, size: CGSize(width: 10, height: 16))
+        rightLeg.position = CGPoint(x: 7, y: -4)
         rightLeg.name = "rightLeg"
         root.addChild(rightLeg)
 
-        // Hair indicator for girl
+        // Body (torso)
+        let body = SKShapeNode(rectOf: CGSize(width: 28, height: 30), cornerRadius: 4)
+        body.fillColor = bodyColor
+        body.strokeColor = darkerBody
+        body.lineWidth = 1
+        body.position = CGPoint(x: 0, y: 19)
+        body.name = "body"
+        root.addChild(body)
+
+        // Belt
+        let belt = SKSpriteNode(color: SKColor(red: 0.4, green: 0.3, blue: 0.15, alpha: 1), size: CGSize(width: 30, height: 3))
+        belt.position = CGPoint(x: 0, y: 6)
+        root.addChild(belt)
+
+        // Arms
+        let leftArm = SKSpriteNode(color: ColorPalette.skinColor, size: CGSize(width: 7, height: 18))
+        leftArm.position = CGPoint(x: -18, y: 18)
+        root.addChild(leftArm)
+        let rightArm = SKSpriteNode(color: ColorPalette.skinColor, size: CGSize(width: 7, height: 18))
+        rightArm.position = CGPoint(x: 18, y: 18)
+        root.addChild(rightArm)
+
+        // Head
+        let head = SKShapeNode(circleOfRadius: 15)
+        head.fillColor = ColorPalette.skinColor
+        head.strokeColor = SKColor(red: 0.85, green: 0.70, blue: 0.55, alpha: 1)
+        head.lineWidth = 1
+        head.position = CGPoint(x: 0, y: 46)
+        head.name = "head"
+        root.addChild(head)
+
+        // Eyes with whites
+        for xPos: CGFloat in [-5, 5] {
+            let eyeWhite = SKShapeNode(circleOfRadius: 4)
+            eyeWhite.fillColor = .white
+            eyeWhite.strokeColor = .clear
+            eyeWhite.position = CGPoint(x: xPos, y: 47)
+            root.addChild(eyeWhite)
+
+            let pupil = SKShapeNode(circleOfRadius: 2.5)
+            pupil.fillColor = SKColor(red: 0.2, green: 0.15, blue: 0.1, alpha: 1)
+            pupil.strokeColor = .clear
+            pupil.position = CGPoint(x: xPos + 0.5, y: 47)
+            root.addChild(pupil)
+
+            let highlight = SKShapeNode(circleOfRadius: 1)
+            highlight.fillColor = .white
+            highlight.strokeColor = .clear
+            highlight.position = CGPoint(x: xPos + 1.5, y: 48.5)
+            root.addChild(highlight)
+        }
+
+        // Mouth
+        let mouth = SKShapeNode(ellipseOf: CGSize(width: 6, height: 3))
+        mouth.fillColor = SKColor(red: 0.85, green: 0.45, blue: 0.40, alpha: 1)
+        mouth.strokeColor = .clear
+        mouth.position = CGPoint(x: 0, y: 39)
+        root.addChild(mouth)
+
+        // Cheeks (blush)
+        for xPos: CGFloat in [-9, 9] {
+            let blush = SKShapeNode(circleOfRadius: 3)
+            blush.fillColor = SKColor(red: 1, green: 0.6, blue: 0.6, alpha: 0.3)
+            blush.strokeColor = .clear
+            blush.position = CGPoint(x: xPos, y: 42)
+            root.addChild(blush)
+        }
+
+        // Hair
         if type == .girl {
-            let hair = SKShapeNode(circleOfRadius: 16)
-            hair.fillColor = SKColor(red: 0.6, green: 0.3, blue: 0.1, alpha: 1)
+            let hairBack = SKShapeNode(circleOfRadius: 18)
+            hairBack.fillColor = SKColor(red: 0.5, green: 0.25, blue: 0.08, alpha: 1)
+            hairBack.strokeColor = .clear
+            hairBack.position = CGPoint(x: 0, y: 49)
+            hairBack.zPosition = -1
+            root.addChild(hairBack)
+
+            // Pigtails
+            for xPos: CGFloat in [-14, 14] {
+                let pigtail = SKShapeNode(circleOfRadius: 8)
+                pigtail.fillColor = SKColor(red: 0.5, green: 0.25, blue: 0.08, alpha: 1)
+                pigtail.strokeColor = .clear
+                pigtail.position = CGPoint(x: xPos, y: 52)
+                root.addChild(pigtail)
+            }
+
+            // Hair bow
+            let bow1 = SKShapeNode(ellipseOf: CGSize(width: 8, height: 6))
+            bow1.fillColor = SKColor(red: 1, green: 0.3, blue: 0.5, alpha: 1)
+            bow1.strokeColor = .clear
+            bow1.position = CGPoint(x: 12, y: 58)
+            root.addChild(bow1)
+            let bow2 = SKShapeNode(ellipseOf: CGSize(width: 8, height: 6))
+            bow2.fillColor = SKColor(red: 1, green: 0.3, blue: 0.5, alpha: 1)
+            bow2.strokeColor = .clear
+            bow2.position = CGPoint(x: 16, y: 56)
+            root.addChild(bow2)
+        } else {
+            let hair = SKShapeNode(rectOf: CGSize(width: 28, height: 12), cornerRadius: 4)
+            hair.fillColor = SKColor(red: 0.3, green: 0.2, blue: 0.1, alpha: 1)
             hair.strokeColor = .clear
-            hair.position = CGPoint(x: 0, y: 46)
-            hair.zPosition = -1
+            hair.position = CGPoint(x: 0, y: 55)
             root.addChild(hair)
 
-            let ribbon = SKSpriteNode(color: .magenta, size: CGSize(width: 8, height: 8))
-            ribbon.position = CGPoint(x: 10, y: 54)
-            root.addChild(ribbon)
-        } else {
-            let hair = SKSpriteNode(color: SKColor(red: 0.3, green: 0.2, blue: 0.1, alpha: 1),
-                                     size: CGSize(width: 26, height: 10))
-            hair.position = CGPoint(x: 0, y: 52)
-            root.addChild(hair)
+            let fringe = SKShapeNode(rectOf: CGSize(width: 18, height: 6), cornerRadius: 2)
+            fringe.fillColor = SKColor(red: 0.3, green: 0.2, blue: 0.1, alpha: 1)
+            fringe.strokeColor = .clear
+            fringe.position = CGPoint(x: -3, y: 55)
+            root.addChild(fringe)
         }
 
         return root
@@ -449,27 +529,57 @@ enum NodeFactory {
     // MARK: - Coin
 
     static func makeCoin() -> SKNode {
+        let container = SKNode()
+        container.name = "coin"
+
+        // Outer glow
+        let glow = SKShapeNode(circleOfRadius: Constants.coinSize / 2 + 4)
+        glow.fillColor = SKColor(red: 1, green: 0.9, blue: 0.3, alpha: 0.15)
+        glow.strokeColor = .clear
+        container.addChild(glow)
+
+        // Main coin
         let coin = SKShapeNode(circleOfRadius: Constants.coinSize / 2)
         coin.fillColor = ColorPalette.goldColor
-        coin.strokeColor = SKColor(red: 0.85, green: 0.70, blue: 0.0, alpha: 1)
-        coin.lineWidth = 2
-        coin.name = "coin"
+        coin.strokeColor = SKColor(red: 0.85, green: 0.65, blue: 0.0, alpha: 1)
+        coin.lineWidth = 2.5
+        container.addChild(coin)
 
-        let label = SKLabelNode(text: "$")
-        label.fontName = Constants.fontName
+        // Inner ring
+        let innerRing = SKShapeNode(circleOfRadius: Constants.coinSize / 2 - 4)
+        innerRing.fillColor = .clear
+        innerRing.strokeColor = SKColor(red: 0.90, green: 0.75, blue: 0.1, alpha: 0.6)
+        innerRing.lineWidth = 1
+        container.addChild(innerRing)
+
+        let label = SKLabelNode(text: "★")
         label.fontSize = 14
-        label.fontColor = SKColor(red: 0.75, green: 0.55, blue: 0.0, alpha: 1)
+        label.fontColor = SKColor(red: 0.80, green: 0.55, blue: 0.0, alpha: 1)
         label.verticalAlignmentMode = .center
-        coin.addChild(label)
+        container.addChild(label)
 
-        // Spin animation
+        // Shine animation
         let spin = SKAction.sequence([
-            SKAction.scaleX(to: 0.2, duration: 0.3),
-            SKAction.scaleX(to: 1.0, duration: 0.3)
+            SKAction.scaleX(to: 0.2, duration: 0.35),
+            SKAction.scaleX(to: 1.0, duration: 0.35)
         ])
-        coin.run(SKAction.repeatForever(spin))
+        container.run(SKAction.repeatForever(spin))
 
-        return coin
+        // Subtle float
+        let float = SKAction.sequence([
+            SKAction.moveBy(x: 0, y: 4, duration: 0.8),
+            SKAction.moveBy(x: 0, y: -4, duration: 0.8)
+        ])
+        container.run(SKAction.repeatForever(float))
+
+        // Glow pulse
+        let pulse = SKAction.sequence([
+            SKAction.fadeAlpha(to: 0.08, duration: 0.6),
+            SKAction.fadeAlpha(to: 0.2, duration: 0.6)
+        ])
+        glow.run(SKAction.repeatForever(pulse))
+
+        return container
     }
 
     // MARK: - End Flag
@@ -508,47 +618,124 @@ enum NodeFactory {
         let colors = ColorPalette.colors(for: era)
         let root = SKNode()
 
-        let trunkHeight: CGFloat = CGFloat.random(in: 60...120)
-        let trunk = SKSpriteNode(color: colors.treeTrunk, size: CGSize(width: 14, height: trunkHeight))
+        let trunkHeight: CGFloat = CGFloat.random(in: 70...130)
+        let trunkWidth: CGFloat = CGFloat.random(in: 16...22)
+
+        // Trunk with bark texture
+        let trunk = SKShapeNode(rectOf: CGSize(width: trunkWidth, height: trunkHeight), cornerRadius: 3)
+        trunk.fillColor = colors.treeTrunk
+        trunk.strokeColor = colors.treeTrunk.withAlphaComponent(0.6)
+        trunk.lineWidth = 1
         trunk.position = CGPoint(x: 0, y: trunkHeight / 2)
         root.addChild(trunk)
 
+        // Bark lines
+        for i in 0..<3 {
+            let bark = SKSpriteNode(color: colors.treeTrunk.withAlphaComponent(0.4),
+                                     size: CGSize(width: trunkWidth - 4, height: 2))
+            bark.position = CGPoint(x: 0, y: CGFloat(i) * (trunkHeight / 3.5) + 15)
+            root.addChild(bark)
+        }
+
+        // Roots
+        for xPos: CGFloat in [-trunkWidth * 0.6, trunkWidth * 0.6] {
+            let rootNode = SKShapeNode(ellipseOf: CGSize(width: 12, height: 6))
+            rootNode.fillColor = colors.treeTrunk
+            rootNode.strokeColor = .clear
+            rootNode.position = CGPoint(x: xPos, y: 2)
+            root.addChild(rootNode)
+        }
+
         switch era {
         case .triassic:
-            // Small ferns - triangular
-            for i in 0..<3 {
-                let size = CGFloat(25 - i * 5)
-                let leaf = SKShapeNode(rectOf: CGSize(width: size, height: size * 0.8))
-                leaf.fillColor = colors.treeLeaves
-                leaf.strokeColor = .clear
-                leaf.position = CGPoint(x: 0, y: trunkHeight - CGFloat(i) * 18 + 10)
-                leaf.zRotation = .pi / 4
-                root.addChild(leaf)
+            // Prehistoric ferns - layered triangular fronds
+            let fernColors = [colors.treeLeaves,
+                             colors.treeLeaves.withAlphaComponent(0.8),
+                             colors.treeLeaves.withAlphaComponent(0.6)]
+            for i in 0..<4 {
+                let size = CGFloat(35 - i * 7)
+                let frond = makeTrianglePath(width: size, height: size * 0.7)
+                let shape = SKShapeNode(path: frond)
+                shape.fillColor = fernColors[i % fernColors.count]
+                shape.strokeColor = colors.treeLeaves.withAlphaComponent(0.4)
+                shape.lineWidth = 1
+                shape.position = CGPoint(x: 0, y: trunkHeight - CGFloat(i) * 16 + 15)
+                root.addChild(shape)
             }
+            // Side fronds
+            for side: CGFloat in [-1, 1] {
+                let sideLeaf = SKShapeNode(ellipseOf: CGSize(width: 20, height: 12))
+                sideLeaf.fillColor = colors.treeLeaves.withAlphaComponent(0.7)
+                sideLeaf.strokeColor = .clear
+                sideLeaf.position = CGPoint(x: side * 18, y: trunkHeight * 0.6)
+                sideLeaf.zRotation = side * 0.4
+                root.addChild(sideLeaf)
+            }
+
         case .jurassic:
-            // Tall trees with big circular canopy
-            let canopy = SKShapeNode(circleOfRadius: 35)
+            // Lush, layered canopy
+            let canopyLayers: [(CGFloat, CGFloat, CGFloat)] = [
+                (40, 0, 22), (32, -18, 14), (32, 18, 14), (25, -8, 8), (25, 12, 6)
+            ]
+            for (radius, xOff, yOff) in canopyLayers {
+                let canopy = SKShapeNode(circleOfRadius: radius)
+                canopy.fillColor = colors.treeLeaves.withAlphaComponent(CGFloat.random(in: 0.7...1.0))
+                canopy.strokeColor = colors.treeLeaves.withAlphaComponent(0.3)
+                canopy.lineWidth = 1.5
+                canopy.position = CGPoint(x: xOff, y: trunkHeight + yOff)
+                root.addChild(canopy)
+            }
+            // Hanging vines
+            for xPos: CGFloat in [-15, 20] {
+                let vine = SKSpriteNode(color: SKColor(red: 0.1, green: 0.45, blue: 0.1, alpha: 0.5),
+                                         size: CGSize(width: 2, height: CGFloat.random(in: 20...40)))
+                vine.position = CGPoint(x: xPos, y: trunkHeight - 5)
+                vine.anchorPoint = CGPoint(x: 0.5, y: 1)
+                root.addChild(vine)
+            }
+
+        case .cretaceous:
+            // Sparse, volcanic era - gnarled tree
+            let canopy = SKShapeNode(ellipseOf: CGSize(width: 35, height: 22))
             canopy.fillColor = colors.treeLeaves
-            canopy.strokeColor = colors.treeLeaves.withAlphaComponent(0.7)
-            canopy.lineWidth = 3
-            canopy.position = CGPoint(x: 0, y: trunkHeight + 20)
+            canopy.strokeColor = colors.treeLeaves.withAlphaComponent(0.5)
+            canopy.lineWidth = 1
+            canopy.position = CGPoint(x: 4, y: trunkHeight + 10)
             root.addChild(canopy)
 
-            let canopy2 = SKShapeNode(circleOfRadius: 25)
-            canopy2.fillColor = colors.treeLeaves.withAlphaComponent(0.8)
+            let canopy2 = SKShapeNode(ellipseOf: CGSize(width: 22, height: 16))
+            canopy2.fillColor = colors.treeLeaves.withAlphaComponent(0.7)
             canopy2.strokeColor = .clear
-            canopy2.position = CGPoint(x: 15, y: trunkHeight + 5)
+            canopy2.position = CGPoint(x: -10, y: trunkHeight + 5)
             root.addChild(canopy2)
-        case .cretaceous:
-            // Sparse, volcanic era trees
-            let canopy = SKShapeNode(ellipseOf: CGSize(width: 30, height: 20))
-            canopy.fillColor = colors.treeLeaves
-            canopy.strokeColor = .clear
-            canopy.position = CGPoint(x: 0, y: trunkHeight + 8)
-            root.addChild(canopy)
+
+            // Ash particles
+            for _ in 0..<2 {
+                let ash = SKShapeNode(circleOfRadius: 2)
+                ash.fillColor = SKColor(white: 0.5, alpha: 0.3)
+                ash.strokeColor = .clear
+                ash.position = CGPoint(x: CGFloat.random(in: -20...20), y: trunkHeight + CGFloat.random(in: 15...35))
+                root.addChild(ash)
+
+                let drift = SKAction.sequence([
+                    SKAction.moveBy(x: CGFloat.random(in: -10...10), y: 15, duration: 2),
+                    SKAction.fadeOut(withDuration: 0.5),
+                    SKAction.removeFromParent()
+                ])
+                ash.run(SKAction.repeatForever(SKAction.sequence([drift, SKAction.fadeIn(withDuration: 0.1)])))
+            }
         }
 
         return root
+    }
+
+    private static func makeTrianglePath(width: CGFloat, height: CGFloat) -> CGPath {
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 0, y: height / 2))
+        path.addLine(to: CGPoint(x: -width / 2, y: -height / 2))
+        path.addLine(to: CGPoint(x: width / 2, y: -height / 2))
+        path.closeSubpath()
+        return path
     }
 
     // MARK: - UI Buttons

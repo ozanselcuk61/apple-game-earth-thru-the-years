@@ -32,6 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func didMove(to view: SKView) {
+        // Enable multitouch!
+        view.isMultipleTouchEnabled = true
+
         setupPhysics()
         setupBackground()
         buildLevel()
@@ -324,27 +327,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         transitionTo(completeScene, duration: 1.0)
     }
 
-    // MARK: - Pause
+    // MARK: - Touch Handling (multitouch)
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: cameraManager.cameraNode)
-        let touchedNodes = cameraManager.cameraNode.nodes(at: location)
+        for touch in touches {
+            let location = touch.location(in: cameraManager.cameraNode)
+            let touchedNodes = cameraManager.cameraNode.nodes(at: location)
 
-        for node in touchedNodes {
-            if node.name == "pauseButton" {
-                togglePause()
-                return
+            // Check UI buttons first
+            var handledByUI = false
+            for node in touchedNodes {
+                if node.name == "pauseButton" {
+                    togglePause()
+                    handledByUI = true
+                    break
+                }
+                if node.name == "resumeButton" || (node.name ?? "").hasPrefix("Devam") {
+                    togglePause()
+                    handledByUI = true
+                    break
+                }
+                if node.name == "quitButton" || (node.name ?? "").hasPrefix("Çık") {
+                    let menuScene = MainMenuScene(size: size)
+                    transitionTo(menuScene)
+                    handledByUI = true
+                    break
+                }
             }
-            if node.name == "resumeButton" || (node.name ?? "").hasPrefix("Devam") {
-                togglePause()
-                return
+
+            // If not a UI button, forward to touch controls
+            if !handledByUI {
+                touchControls.handleTouchBegan(touch, in: cameraManager.cameraNode)
             }
-            if node.name == "quitButton" || (node.name ?? "").hasPrefix("Çık") {
-                let menuScene = MainMenuScene(size: size)
-                transitionTo(menuScene)
-                return
-            }
+        }
+    }
+
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            touchControls.handleTouchMoved(touch, in: cameraManager.cameraNode)
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            touchControls.handleTouchEnded(touch)
+        }
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            touchControls.handleTouchEnded(touch)
         }
     }
 

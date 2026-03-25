@@ -64,12 +64,33 @@ class TileMapBuilder {
 
             nodes.append(ground)
 
+            // Grass/surface layer on top
+            let grassHeight: CGFloat = 6
+            let grass = SKSpriteNode(color: colors.treeLeaves.withAlphaComponent(0.6),
+                                      size: CGSize(width: segmentWidth, height: grassHeight))
+            grass.position = CGPoint(x: x + segmentWidth / 2, y: height + grassHeight / 2)
+            grass.zPosition = Constants.ZPosition.ground + 0.05
+            nodes.append(grass)
+
             // Add dirt layer below
             let dirt = SKSpriteNode(color: colors.groundBottom,
-                                    size: CGSize(width: segmentWidth, height: 30))
-            dirt.position = CGPoint(x: x + segmentWidth / 2, y: height / 2 - (height / 2 + 15))
+                                    size: CGSize(width: segmentWidth, height: 40))
+            dirt.position = CGPoint(x: x + segmentWidth / 2, y: -10)
             dirt.zPosition = Constants.ZPosition.ground - 1
             nodes.append(dirt)
+
+            // Small decorative grass tufts
+            let tufts = Int(segmentWidth / 40)
+            for t in 0..<tufts {
+                let tX = x + CGFloat(t) * 40 + CGFloat(random.nextInt(upperBound: 20))
+                let tuft = SKShapeNode(ellipseOf: CGSize(width: CGFloat(random.nextInt(upperBound: 8) + 6),
+                                                          height: CGFloat(random.nextInt(upperBound: 6) + 4)))
+                tuft.fillColor = colors.treeLeaves.withAlphaComponent(CGFloat(random.nextInt(upperBound: 3) + 3) / 10.0)
+                tuft.strokeColor = .clear
+                tuft.position = CGPoint(x: tX, y: height + CGFloat(random.nextInt(upperBound: 5) + 3))
+                tuft.zPosition = Constants.ZPosition.decoration - 1
+                nodes.append(tuft)
+            }
 
             x += segmentWidth
         }
