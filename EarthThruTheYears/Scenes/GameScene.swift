@@ -97,16 +97,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func setupPauseButton() {
-        let pauseButton = SKShapeNode(rectOf: CGSize(width: 44, height: 44), cornerRadius: 10)
-        pauseButton.fillColor = SKColor(white: 0.2, alpha: 0.6)
-        pauseButton.strokeColor = SKColor(white: 0.5, alpha: 0.5)
-        pauseButton.lineWidth = 1
-        pauseButton.position = CGPoint(x: -600, y: 320)
+        let pauseButton = SKShapeNode(rectOf: CGSize(width: 55, height: 55), cornerRadius: 12)
+        pauseButton.fillColor = SKColor(white: 0.15, alpha: 0.7)
+        pauseButton.strokeColor = SKColor(white: 0.6, alpha: 0.6)
+        pauseButton.lineWidth = 2
+        pauseButton.position = CGPoint(x: -600, y: 290)
         pauseButton.name = "pauseButton"
         pauseButton.zPosition = Constants.ZPosition.hud
 
         let pauseLabel = SKLabelNode(text: "⏸")
-        pauseLabel.fontSize = 22
+        pauseLabel.fontSize = 28
         pauseLabel.verticalAlignmentMode = .center
         pauseLabel.name = "pauseButton"
         pauseButton.addChild(pauseLabel)

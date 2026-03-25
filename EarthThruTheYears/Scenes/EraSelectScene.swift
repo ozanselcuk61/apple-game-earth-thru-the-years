@@ -108,7 +108,7 @@ class EraSelectScene: SKScene {
 
         // Back button
         let backButton = NodeFactory.makeButton(text: "Ana Menü", size: CGSize(width: 160, height: 45))
-        backButton.position = CGPoint(x: 110, y: 40)
+        backButton.position = CGPoint(x: 120, y: 80)
         backButton.name = "backButton"
         addChild(backButton)
     }

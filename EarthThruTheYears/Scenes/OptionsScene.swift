@@ -55,7 +55,7 @@ class OptionsScene: SKScene {
 
         // Back button
         let backButton = NodeFactory.makeButton(text: "Geri", size: CGSize(width: 140, height: 45))
-        backButton.position = CGPoint(x: 100, y: 40)
+        backButton.position = CGPoint(x: 120, y: 80)
         backButton.name = "backButton"
         addChild(backButton)
     }
