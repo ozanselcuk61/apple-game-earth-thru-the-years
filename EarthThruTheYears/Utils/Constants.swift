@@ -6,8 +6,8 @@ enum Constants {
 
     // Physics
     static let gravity: CGFloat = -20.0
-    static let playerMoveSpeed: CGFloat = 300.0
-    static let playerJumpImpulse: CGFloat = 550.0
+    static let playerMoveSpeed: CGFloat = 350.0
+    static let playerJumpImpulse: CGFloat = 620.0
     static let maxPlayerVelocityY: CGFloat = 800.0
 
     // Gameplay

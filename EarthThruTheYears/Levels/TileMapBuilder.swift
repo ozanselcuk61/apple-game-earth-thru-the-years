@@ -27,8 +27,8 @@ class TileMapBuilder {
             let segmentWidth: CGFloat
 
             if hasGap {
-                // Gap
-                let gapWidth = CGFloat(random.nextInt(upperBound: 3) + 2) * tileSize
+                // Gap - keep narrow enough for player to jump across
+                let gapWidth = CGFloat(random.nextInt(upperBound: 2) + 1) * tileSize + 20 // 70-120 points
                 x += gapWidth
 
                 // Add boundary for death pit

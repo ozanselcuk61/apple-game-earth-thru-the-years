@@ -86,13 +86,13 @@ class LevelCompleteScene: SKScene {
         // Buttons
         if GameManager.shared.hasNextLevel() {
             let nextButton = NodeFactory.makeButton(text: "Sonraki Bölüm", size: CGSize(width: 220, height: 55))
-            nextButton.position = CGPoint(x: size.width / 2, y: 150)
+            nextButton.position = CGPoint(x: size.width / 2, y: 200)
             nextButton.name = "nextButton"
             addChild(nextButton)
         }
 
         let menuButton = NodeFactory.makeButton(text: "Bölüm Seçimi", size: CGSize(width: 220, height: 50))
-        menuButton.position = CGPoint(x: size.width / 2, y: 80)
+        menuButton.position = CGPoint(x: size.width / 2, y: 120)
         menuButton.name = "menuButton"
         addChild(menuButton)
     }

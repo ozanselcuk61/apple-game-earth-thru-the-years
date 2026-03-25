@@ -39,8 +39,8 @@ class MainMenuScene: SKScene {
         addChild(dinoSilhouette)
 
         // Menu buttons
-        let buttonSpacing: CGFloat = 70
-        let startY = size.height / 2 + 40
+        let buttonSpacing: CGFloat = 60
+        let startY = size.height / 2 + 60
 
         let playButton = NodeFactory.makeButton(text: "Maceraya Başla")
         playButton.position = CGPoint(x: size.width / 2, y: startY)
