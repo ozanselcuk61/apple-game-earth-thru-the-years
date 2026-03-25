@@ -44,7 +44,6 @@
 		A10000035 /* MarketScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000035; };
 		A10000036 /* OptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000036; };
 		A10000037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000037; };
-		A10000038 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B10000038; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,7 +85,6 @@
 		B10000035 /* MarketScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketScene.swift; sourceTree = "<group>"; };
 		B10000036 /* OptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsScene.swift; sourceTree = "<group>"; };
 		B10000037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B10000038 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B10000039 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +130,6 @@
 				B10000001 /* AppDelegate.swift */,
 				B10000002 /* GameViewController.swift */,
 				B10000039 /* Info.plist */,
-				B10000038 /* LaunchScreen.storyboard */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -295,7 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000037 /* Assets.xcassets in Resources */,
-				A10000038 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +406,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = EarthThruTheYears/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -437,7 +433,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = EarthThruTheYears/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
