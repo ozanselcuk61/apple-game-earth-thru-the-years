@@ -21,6 +21,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var isPaused2 = false // avoid conflict with SKScene.isPaused
     private var previousGoldForExtraLife: Int = 0
 
+    // Checkpoint system
+    private var lastCheckpointX: CGFloat = 150
+    private var checkpointPositions: [CGFloat] = []
+
     override init(size: CGSize) {
         self.levelData = LevelCatalog.level(era: GameManager.shared.currentEra,
                                              subLevel: GameManager.shared.currentLevel)
@@ -90,6 +94,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let builder = LevelBuilder(levelData: levelData, scene: self)
         levelComponents = builder.build()
         dinosaurs = levelComponents.dinosaurs
+        setupCheckpoints()
+    }
+
+    private func setupCheckpoints() {
+        let levelWidth = levelComponents.levelWidth
+        // Place checkpoints at 25%, 50%, 75% of level
+        let checkpointCount = 3
+        for i in 1...checkpointCount {
+            let cpX = levelWidth * CGFloat(i) / CGFloat(checkpointCount + 1)
+            checkpointPositions.append(cpX)
+
+            // Visual checkpoint flag
+            let flag = SKNode()
+            flag.position = CGPoint(x: cpX, y: Constants.groundHeight)
+            flag.zPosition = Constants.ZPosition.decoration
+
+            let pole = SKSpriteNode(color: SKColor(white: 0.7, alpha: 0.8), size: CGSize(width: 4, height: 80))
+            pole.position = CGPoint(x: 0, y: 40)
+            flag.addChild(pole)
+
+            let banner = SKSpriteNode(color: SKColor(red: 0.2, green: 0.7, blue: 1.0, alpha: 0.8),
+                                       size: CGSize(width: 28, height: 18))
+            banner.position = CGPoint(x: 16, y: 70)
+            flag.addChild(banner)
+
+            let cpLabel = SKLabelNode(text: "✓")
+            cpLabel.fontSize = 14
+            cpLabel.fontColor = .white
+            cpLabel.verticalAlignmentMode = .center
+            cpLabel.position = CGPoint(x: 16, y: 70)
+            flag.addChild(cpLabel)
+
+            flag.name = "checkpoint_\(i)"
+            addChild(flag)
+        }
     }
 
     private func setupPlayer() {
@@ -171,6 +210,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         cameraManager.update(playerPosition: player.position)
         parallaxBackground.update(cameraX: cameraManager.cameraNode.position.x - size.width / 2)
+
+        // Update checkpoint
+        updateCheckpoint()
 
         // HUD updates
         hud.updateGold(GameManager.shared.levelGold)
@@ -303,12 +345,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         previousGoldForExtraLife = currentGold
     }
 
+    private func updateCheckpoint() {
+        for cpX in checkpointPositions {
+            if player.position.x >= cpX && cpX > lastCheckpointX {
+                lastCheckpointX = cpX
+                // Visual feedback - change checkpoint flag color
+                if let cpFlag = childNode(withName: "//checkpoint_\(checkpointPositions.firstIndex(of: cpX)! + 1)") {
+                    cpFlag.children.forEach { child in
+                        if let sprite = child as? SKSpriteNode, sprite.size.width == 28 {
+                            sprite.color = .green
+                        }
+                    }
+                }
+                // Show checkpoint notification
+                let notify = SKLabelNode(text: "✓ Checkpoint!")
+                notify.fontName = Constants.fontName
+                notify.fontSize = 22
+                notify.fontColor = SKColor(red: 0.2, green: 0.8, blue: 1.0, alpha: 1)
+                notify.position = CGPoint(x: 0, y: 50)
+                notify.zPosition = Constants.ZPosition.overlay
+                cameraManager.cameraNode.addChild(notify)
+                notify.run(SKAction.sequence([
+                    SKAction.group([
+                        SKAction.moveBy(x: 0, y: 40, duration: 1.0),
+                        SKAction.fadeOut(withDuration: 1.0)
+                    ]),
+                    SKAction.removeFromParent()
+                ]))
+            }
+        }
+    }
+
     private func handlePlayerDeath() {
         guard !isLevelComplete else { return }
 
         if GameManager.shared.loseLife() {
-            // Respawn player
-            player.position = CGPoint(x: max(150, player.position.x - 300), y: Constants.groundHeight + 30)
+            // Respawn at last checkpoint
+            player.position = CGPoint(x: lastCheckpointX, y: Constants.groundHeight + 30)
             player.physicsBody?.velocity = .zero
             player.health.setLives(GameManager.shared.lives)
             hud.updateLives(GameManager.shared.lives)

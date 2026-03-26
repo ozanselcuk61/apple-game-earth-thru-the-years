@@ -34,7 +34,7 @@ class HUD: SKNode {
         coinIcon.fillColor = ColorPalette.goldColor
         coinIcon.strokeColor = SKColor(red: 0.8, green: 0.65, blue: 0, alpha: 1)
         coinIcon.lineWidth = 2
-        coinIcon.position = CGPoint(x: -580, y: 320)
+        coinIcon.position = CGPoint(x: -580, y: 280)
         addChild(coinIcon)
 
         goldLabel.fontName = Constants.fontName
@@ -42,7 +42,7 @@ class HUD: SKNode {
         goldLabel.fontColor = ColorPalette.textColor
         goldLabel.horizontalAlignmentMode = .left
         goldLabel.verticalAlignmentMode = .center
-        goldLabel.position = CGPoint(x: -565, y: 320)
+        goldLabel.position = CGPoint(x: -565, y: 280)
         addChild(goldLabel)
 
         // Level label (top center)
@@ -51,14 +51,14 @@ class HUD: SKNode {
         levelLabel.fontColor = ColorPalette.textColor
         levelLabel.horizontalAlignmentMode = .center
         levelLabel.verticalAlignmentMode = .center
-        levelLabel.position = CGPoint(x: 0, y: 320)
+        levelLabel.position = CGPoint(x: 0, y: 280)
         addChild(levelLabel)
 
         // Progress bar (top center, below level label)
         progressBar.fillColor = SKColor(white: 0.2, alpha: 0.6)
         progressBar.strokeColor = SKColor(white: 0.5, alpha: 0.8)
         progressBar.lineWidth = 1
-        progressBar.position = CGPoint(x: 0, y: 295)
+        progressBar.position = CGPoint(x: 0, y: 260)
         addChild(progressBar)
 
         progressFillBar.anchorPoint = CGPoint(x: 0, y: 0.5)
@@ -67,7 +67,7 @@ class HUD: SKNode {
 
         let maskNode = SKSpriteNode(color: .white, size: CGSize(width: barWidth - 4, height: barHeight - 4))
         progressFill.maskNode = maskNode
-        progressFill.position = CGPoint(x: 0, y: 295)
+        progressFill.position = CGPoint(x: 0, y: 260)
         addChild(progressFill)
 
         // Hearts for lives (top right)
@@ -90,18 +90,19 @@ class HUD: SKNode {
         }
 
         for i in 0..<lives {
-            let heart = SKShapeNode(rectOf: CGSize(width: 18, height: 16), cornerRadius: 4)
+            let heart = SKShapeNode(rectOf: CGSize(width: 22, height: 20), cornerRadius: 5)
             heart.fillColor = ColorPalette.heartColor
-            heart.strokeColor = .clear
-            heart.position = CGPoint(x: 500 + CGFloat(i) * 25, y: 320)
+            heart.strokeColor = SKColor(red: 0.7, green: 0.1, blue: 0.15, alpha: 1)
+            heart.lineWidth = 1
+            heart.position = CGPoint(x: 460 + CGFloat(i) * 28, y: 280)
             addChild(heart)
             heartNodes.append(heart)
 
             let label = SKLabelNode(text: "♥")
-            label.fontSize = 20
+            label.fontSize = 18
             label.fontColor = .white
             label.verticalAlignmentMode = .center
-            label.position = CGPoint(x: 500 + CGFloat(i) * 25, y: 320)
+            label.position = CGPoint(x: 460 + CGFloat(i) * 28, y: 280)
             label.name = "heartLabel_\(i)"
             addChild(label)
         }
@@ -138,7 +139,7 @@ class HUD: SKNode {
         reqLabel.fontName = Constants.fontNameRegular
         reqLabel.fontSize = 14
         reqLabel.fontColor = current >= required ? .green : ColorPalette.goldColor
-        reqLabel.position = CGPoint(x: 0, y: 275)
+        reqLabel.position = CGPoint(x: 0, y: 242)
         reqLabel.name = "goldReq"
         addChild(reqLabel)
     }
