@@ -8,84 +8,77 @@ class MainMenuScene: SKScene {
     }
 
     private func setupUI() {
-        // Title
-        let title = SKLabelNode(text: "Earth Throughout")
+        // Title - single line, centered
+        let title = SKLabelNode(text: "Earth Throughout the Years")
         title.fontName = Constants.fontName
-        title.fontSize = 42
+        title.fontSize = 34
         title.fontColor = ColorPalette.goldColor
-        title.position = CGPoint(x: size.width / 2, y: size.height - 120)
+        title.position = CGPoint(x: size.width / 2, y: size.height - 100)
         addChild(title)
 
-        let subtitle = SKLabelNode(text: "the Years")
-        subtitle.fontName = Constants.fontName
-        subtitle.fontSize = 42
-        subtitle.fontColor = ColorPalette.goldColor
-        subtitle.position = CGPoint(x: size.width / 2, y: size.height - 170)
-        addChild(subtitle)
-
-        // Subtitle - era info
+        // Subtitle
         let eraInfo = SKLabelNode(text: "Dinozorlar Çağında Zaman Yolculuğu")
         eraInfo.fontName = Constants.fontNameRegular
-        eraInfo.fontSize = 18
+        eraInfo.fontSize = 16
         eraInfo.fontColor = ColorPalette.textColor.withAlphaComponent(0.7)
-        eraInfo.position = CGPoint(x: size.width / 2, y: size.height - 205)
+        eraInfo.position = CGPoint(x: size.width / 2, y: size.height - 135)
         addChild(eraInfo)
 
-        // Animated dinosaur silhouette
-        let dinoSilhouette = NodeFactory.makeDinosaur(type: .tRex)
-        dinoSilhouette.setScale(0.6)
-        dinoSilhouette.alpha = 0.2
-        dinoSilhouette.position = CGPoint(x: size.width - 180, y: 100)
-        addChild(dinoSilhouette)
+        // Menu buttons - compact layout
+        let buttonSpacing: CGFloat = 55
+        let startY = size.height / 2 + 50
 
-        // Menu buttons
-        let buttonSpacing: CGFloat = 60
-        let startY = size.height / 2 + 60
-
-        let playButton = NodeFactory.makeButton(text: "Maceraya Başla")
+        let playButton = NodeFactory.makeButton(text: "Maceraya Başla", size: CGSize(width: 240, height: 50))
         playButton.position = CGPoint(x: size.width / 2, y: startY)
         playButton.name = "playButton"
         addChild(playButton)
 
-        let characterButton = NodeFactory.makeButton(text: "Karakter Seçimi")
+        let characterButton = NodeFactory.makeButton(text: "Karakter Seçimi", size: CGSize(width: 240, height: 50))
         characterButton.position = CGPoint(x: size.width / 2, y: startY - buttonSpacing)
         characterButton.name = "characterButton"
         addChild(characterButton)
 
-        let marketButton = NodeFactory.makeButton(text: "Market")
+        let marketButton = NodeFactory.makeButton(text: "Market", size: CGSize(width: 240, height: 50))
         marketButton.position = CGPoint(x: size.width / 2, y: startY - buttonSpacing * 2)
         marketButton.name = "marketButton"
         addChild(marketButton)
 
-        let optionsButton = NodeFactory.makeButton(text: "Ayarlar")
+        let optionsButton = NodeFactory.makeButton(text: "Ayarlar", size: CGSize(width: 240, height: 50))
         optionsButton.position = CGPoint(x: size.width / 2, y: startY - buttonSpacing * 3)
         optionsButton.name = "optionsButton"
         addChild(optionsButton)
 
-        // Gold display
-        let goldBg = SKShapeNode(rectOf: CGSize(width: 140, height: 36), cornerRadius: 8)
+        // Gold display (top right, safely inside)
+        let goldBg = SKShapeNode(rectOf: CGSize(width: 130, height: 32), cornerRadius: 8)
         goldBg.fillColor = SKColor(white: 0.1, alpha: 0.6)
         goldBg.strokeColor = ColorPalette.goldColor.withAlphaComponent(0.5)
         goldBg.lineWidth = 1
-        goldBg.position = CGPoint(x: size.width - 100, y: size.height - 60)
+        goldBg.position = CGPoint(x: size.width - 120, y: size.height - 80)
         addChild(goldBg)
 
-        let goldLabel = SKLabelNode(text: "💰 \(GameManager.shared.totalGold)")
+        let goldLabel = SKLabelNode(text: "\(GameManager.shared.totalGold) Altın")
         goldLabel.fontName = Constants.fontName
-        goldLabel.fontSize = 18
+        goldLabel.fontSize = 16
         goldLabel.fontColor = ColorPalette.goldColor
         goldLabel.verticalAlignmentMode = .center
-        goldLabel.position = CGPoint(x: size.width - 100, y: size.height - 60)
+        goldLabel.position = CGPoint(x: size.width - 120, y: size.height - 80)
         addChild(goldLabel)
 
-        // Character display
+        // Character display (top left, safely inside)
         let currentChar = GameManager.shared.selectedCharacter
         let charLabel = SKLabelNode(text: "Karakter: \(currentChar == .boy ? "Erkek" : "Kız")")
         charLabel.fontName = Constants.fontNameRegular
-        charLabel.fontSize = 14
+        charLabel.fontSize = 13
         charLabel.fontColor = ColorPalette.textColor.withAlphaComponent(0.6)
-        charLabel.position = CGPoint(x: 120, y: size.height - 60)
+        charLabel.position = CGPoint(x: 140, y: size.height - 80)
         addChild(charLabel)
+
+        // Decorative dino (bottom right)
+        let dinoSilhouette = NodeFactory.makeDinosaur(type: .tRex)
+        dinoSilhouette.setScale(0.5)
+        dinoSilhouette.alpha = 0.15
+        dinoSilhouette.position = CGPoint(x: size.width - 200, y: 140)
+        addChild(dinoSilhouette)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

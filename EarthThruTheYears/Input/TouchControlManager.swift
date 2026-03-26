@@ -55,7 +55,7 @@ class TouchControlManager: SKNode {
         indicator.name = "indicator"
         dpadNode.addChild(indicator)
 
-        dpadNode.position = CGPoint(x: -490, y: -230)
+        dpadNode.position = CGPoint(x: -490, y: -190)
         dpadCenter = dpadNode.position
         addChild(dpadNode)
 
@@ -71,7 +71,7 @@ class TouchControlManager: SKNode {
         jumpLabel.verticalAlignmentMode = .center
         jumpButton.addChild(jumpLabel)
 
-        jumpButton.position = CGPoint(x: 490, y: -230)
+        jumpButton.position = CGPoint(x: 490, y: -190)
         addChild(jumpButton)
     }
 

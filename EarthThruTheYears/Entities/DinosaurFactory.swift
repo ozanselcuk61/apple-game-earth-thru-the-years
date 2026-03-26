@@ -41,7 +41,7 @@ enum DinosaurFactory {
             let baseX = spacing * CGFloat(i + 1)
             let xOffset = CGFloat.random(in: -50...50)
             let x = (baseX + xOffset).clamped(to: 200...(levelWidth - 200))
-            dino.position = CGPoint(x: x, y: Constants.groundHeight + 10)
+            dino.position = CGPoint(x: x, y: Constants.groundHeight + 20)
 
             let patrolHalf = CGFloat.random(in: 80...150)
             dino.setPatrolBounds(minX: x - patrolHalf, maxX: x + patrolHalf)

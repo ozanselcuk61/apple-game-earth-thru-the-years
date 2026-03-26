@@ -60,6 +60,7 @@ enum NodeFactory {
 
         let sprite = SKSpriteNode(imageNamed: imageName)
         sprite.setScale(2.0)
+        sprite.anchorPoint = CGPoint(x: 0.5, y: 0) // Bottom-center so dino sits on ground
         root.addChild(sprite)
 
         return root

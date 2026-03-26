@@ -48,8 +48,25 @@ class GameManager {
         .cretaceous: 0
     ]
 
-    // Market purchases
+    // Market purchases and usage counts (limited uses per purchase)
     var marketPurchases: Set<String> = []
+    var marketUsesRemaining: [String: Int] = [:]
+
+    // Active power-ups for current level
+    var hasDoubleCoins: Bool { (marketUsesRemaining["double_coins"] ?? 0) > 0 }
+    var hasGoldMagnet: Bool { (marketUsesRemaining["gold_magnet"] ?? 0) > 0 }
+    var hasShieldStart: Bool { (marketUsesRemaining["shield_start"] ?? 0) > 0 }
+    var hasExtraJump: Bool { (marketUsesRemaining["extra_jump"] ?? 0) > 0 }
+
+    func consumeMarketItem(_ id: String) {
+        if let remaining = marketUsesRemaining[id], remaining > 0 {
+            marketUsesRemaining[id] = remaining - 1
+            if marketUsesRemaining[id] == 0 {
+                marketPurchases.remove(id)
+            }
+            saveProgress()
+        }
+    }
 
     private init() {
         loadProgress()
@@ -58,9 +75,10 @@ class GameManager {
     // MARK: - Gold & Lives
 
     func collectGold(_ amount: Int = 1) {
-        levelGold += amount
-        totalGold += amount
-        extraLifeCounter += amount
+        let finalAmount = hasDoubleCoins ? amount * 2 : amount
+        levelGold += finalAmount
+        totalGold += finalAmount
+        extraLifeCounter += finalAmount
 
         while extraLifeCounter >= Constants.goldForExtraLife {
             extraLifeCounter -= Constants.goldForExtraLife

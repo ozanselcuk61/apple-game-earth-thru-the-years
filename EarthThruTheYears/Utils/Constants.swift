@@ -5,10 +5,10 @@ enum Constants {
     static let sceneSize = CGSize(width: 1334, height: 750)
 
     // Physics
-    static let gravity: CGFloat = -18.0
-    static let playerMoveSpeed: CGFloat = 380.0
-    static let playerJumpImpulse: CGFloat = 700.0
-    static let maxPlayerVelocityY: CGFloat = 900.0
+    static let gravity: CGFloat = -16.0
+    static let playerMoveSpeed: CGFloat = 400.0
+    static let playerJumpImpulse: CGFloat = 750.0
+    static let maxPlayerVelocityY: CGFloat = 1000.0
 
     // Gameplay
     static let startingLives = 3

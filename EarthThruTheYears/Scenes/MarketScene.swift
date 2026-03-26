@@ -8,15 +8,16 @@ class MarketScene: SKScene {
         let description: String
         let price: Int
         let icon: String
+        let uses: Int // number of level uses per purchase
     }
 
     private let items: [MarketItem] = [
-        MarketItem(id: "extra_life_pack", name: "Can Paketi", description: "+3 ekstra can", price: 50, icon: "♥"),
-        MarketItem(id: "gold_magnet", name: "Altın Mıknatısı", description: "Altınları otomatik topla", price: 100, icon: "🧲"),
-        MarketItem(id: "shield_start", name: "Başlangıç Kalkanı", description: "Bölüme kalkanla başla", price: 75, icon: "🛡"),
-        MarketItem(id: "double_coins", name: "Çift Altın", description: "Altın değeri 2 katına çıkar", price: 150, icon: "💰"),
-        MarketItem(id: "robot_attack", name: "Robot Saldırısı", description: "Robot düşmanları vurabilir", price: 200, icon: "⚡"),
-        MarketItem(id: "extra_jump", name: "Çift Zıplama", description: "Havada tekrar zıplayabilirsin", price: 120, icon: "🦘"),
+        MarketItem(id: "extra_life_pack", name: "Can Paketi", description: "+3 ekstra can (anında)", price: 50, icon: "♥", uses: 1),
+        MarketItem(id: "gold_magnet", name: "Altın Mıknatısı", description: "3 bölüm boyunca otomatik topla", price: 100, icon: "🧲", uses: 3),
+        MarketItem(id: "shield_start", name: "Başlangıç Kalkanı", description: "3 bölüm kalkanla başla", price: 75, icon: "🛡", uses: 3),
+        MarketItem(id: "double_coins", name: "Çift Altın", description: "5 bölüm 2x altın", price: 150, icon: "💰", uses: 5),
+        MarketItem(id: "robot_attack", name: "Robot Saldırısı", description: "3 bölüm robot saldırır", price: 200, icon: "⚡", uses: 3),
+        MarketItem(id: "extra_jump", name: "Çift Zıplama", description: "5 bölüm havada zıpla", price: 120, icon: "🦘", uses: 5),
     ]
 
     override func didMove(to view: SKView) {
@@ -93,14 +94,23 @@ class MarketScene: SKScene {
             descLabel.position = CGPoint(x: -120, y: -12)
             card.addChild(descLabel)
 
-            // Price or Purchased
-            if isPurchased {
-                let ownedLabel = SKLabelNode(text: "✓ Alındı")
-                ownedLabel.fontName = Constants.fontName
-                ownedLabel.fontSize = 14
-                ownedLabel.fontColor = .green
-                ownedLabel.position = CGPoint(x: 130, y: -5)
-                card.addChild(ownedLabel)
+            // Price and remaining uses
+            let remainingUses = GameManager.shared.marketUsesRemaining[item.id] ?? 0
+            if remainingUses > 0 && item.id != "extra_life_pack" {
+                let usesLabel = SKLabelNode(text: "✓ \(remainingUses) kalan")
+                usesLabel.fontName = Constants.fontName
+                usesLabel.fontSize = 13
+                usesLabel.fontColor = .green
+                usesLabel.position = CGPoint(x: 120, y: 5)
+                card.addChild(usesLabel)
+
+                // Show "buy more" price too
+                let moreLabel = SKLabelNode(text: "+\(item.uses): \(item.price) 🪙")
+                moreLabel.fontName = Constants.fontNameRegular
+                moreLabel.fontSize = 11
+                moreLabel.fontColor = canAfford ? ColorPalette.goldColor : ColorPalette.lockedColor
+                moreLabel.position = CGPoint(x: 120, y: -12)
+                card.addChild(moreLabel)
             } else {
                 let priceLabel = SKLabelNode(text: "\(item.price) 🪙")
                 priceLabel.fontName = Constants.fontName
@@ -145,20 +155,33 @@ class MarketScene: SKScene {
     }
 
     private func purchaseItem(_ item: MarketItem) {
-        guard !GameManager.shared.marketPurchases.contains(item.id) else { return }
         guard GameManager.shared.totalGold >= item.price else {
             showMessage("Yeterli altın yok!")
             return
         }
 
         GameManager.shared.totalGold -= item.price
-        GameManager.shared.marketPurchases.insert(item.id)
+
+        if item.id == "extra_life_pack" {
+            // Instant effect: add 3 lives
+            GameManager.shared.lives += 3
+        } else {
+            // Add uses for the power-up
+            let currentUses = GameManager.shared.marketUsesRemaining[item.id] ?? 0
+            GameManager.shared.marketUsesRemaining[item.id] = currentUses + item.uses
+            GameManager.shared.marketPurchases.insert(item.id)
+        }
+
         GameManager.shared.saveProgress()
 
-        // Refresh UI
         removeAllChildren()
         setupUI()
-        showMessage("\(item.name) satın alındı!")
+        if item.id == "extra_life_pack" {
+            showMessage("\(item.name) alındı! +3 can!")
+        } else {
+            let uses = GameManager.shared.marketUsesRemaining[item.id] ?? 0
+            showMessage("\(item.name) alındı! (\(uses) kullanım)")
+        }
     }
 
     private func showMessage(_ text: String) {

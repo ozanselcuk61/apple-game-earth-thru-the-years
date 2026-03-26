@@ -46,6 +46,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupPauseButton()
 
         previousGoldForExtraLife = GameManager.shared.totalGold
+
+        // Apply market power-ups
+        applyMarketPowerUps()
+    }
+
+    private func applyMarketPowerUps() {
+        // Shield start - temporary invincibility
+        if GameManager.shared.hasShieldStart {
+            player.health.takeDamage() // triggers invincibility
+            player.health.addLife() // restore the life lost
+            GameManager.shared.consumeMarketItem("shield_start")
+        }
+
+        // Double coins is checked in GameManager.collectGold automatically
+        if GameManager.shared.hasDoubleCoins {
+            GameManager.shared.consumeMarketItem("double_coins")
+        }
+
+        // Gold magnet consumed
+        if GameManager.shared.hasGoldMagnet {
+            GameManager.shared.consumeMarketItem("gold_magnet")
+        }
+
+        // Extra jump consumed
+        if GameManager.shared.hasExtraJump {
+            GameManager.shared.consumeMarketItem("extra_jump")
+        }
     }
 
     // MARK: - Setup
@@ -67,13 +94,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func setupPlayer() {
         player = PlayerCharacter(type: GameManager.shared.selectedCharacter)
-        player.position = CGPoint(x: 150, y: Constants.groundHeight + 5)
+        player.position = CGPoint(x: 150, y: Constants.groundHeight + 20)
         addChild(player)
     }
 
     private func setupRobot() {
         robot = RobotCompanion(target: player)
-        robot.position = CGPoint(x: 100, y: Constants.groundHeight + 20)
+        robot.position = CGPoint(x: 100, y: Constants.groundHeight + 30)
         addChild(robot)
     }
 
