@@ -94,17 +94,16 @@ class LevelBuilder {
             let baseX = coinSpacing * CGFloat(i + 1) + CGFloat.random(in: -30...30)
             let x = baseX.clamped(to: 100...(levelWidth - 200))
 
-            // Place coins at reachable heights - some on ground, some in air
+            // Place coins - 80% walkable, 20% need jump
             let coinY: CGFloat
-            if let nearPlatform = platforms.first(where: { abs($0.position.x - x) < 100 }) {
-                coinY = nearPlatform.position.y + 30
+            if let nearPlatform = platforms.first(where: { abs($0.position.x - x) < 80 }) {
+                coinY = nearPlatform.position.y + 25
             } else {
-                // Mix: 60% ground level, 40% jump level
-                let isGroundCoin = i % 5 < 3
+                let isGroundCoin = i % 5 < 4  // 80% on ground
                 if isGroundCoin {
-                    coinY = Constants.groundHeight + CGFloat.random(in: 20...40)
+                    coinY = Constants.groundHeight + CGFloat.random(in: 15...30)
                 } else {
-                    coinY = Constants.groundHeight + CGFloat.random(in: 50...90)
+                    coinY = Constants.groundHeight + CGFloat.random(in: 40...65)
                 }
             }
 

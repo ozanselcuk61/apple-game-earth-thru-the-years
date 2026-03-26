@@ -123,7 +123,7 @@ class TileMapBuilder {
         for i in 0..<count {
             let width = CGFloat(random.nextInt(upperBound: 4) + 3) * tileSize
             let x = spacing * CGFloat(i + 1) + CGFloat(random.nextInt(upperBound: 80) - 40)
-            let y = Constants.groundHeight + CGFloat(random.nextInt(upperBound: 80) + 50)
+            let y = Constants.groundHeight + CGFloat(random.nextInt(upperBound: 50) + 40)
 
             let platform = SKSpriteNode(color: colors.platform, size: CGSize(width: width, height: 18))
             platform.position = CGPoint(x: x, y: y)

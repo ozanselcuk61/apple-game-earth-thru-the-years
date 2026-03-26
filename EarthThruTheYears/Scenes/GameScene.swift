@@ -380,9 +380,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard !isLevelComplete else { return }
 
         if GameManager.shared.loseLife() {
-            // Respawn at last checkpoint
-            player.position = CGPoint(x: lastCheckpointX, y: Constants.groundHeight + 30)
+            // Respawn at last checkpoint - place well above ground
             player.physicsBody?.velocity = .zero
+            player.physicsBody?.isDynamic = false
+            player.position = CGPoint(x: lastCheckpointX, y: Constants.groundHeight + 50)
+
+            // Re-enable physics after a brief delay to avoid falling through
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.player.physicsBody?.isDynamic = true
+            }
+
             player.health.setLives(GameManager.shared.lives)
             hud.updateLives(GameManager.shared.lives)
         } else {

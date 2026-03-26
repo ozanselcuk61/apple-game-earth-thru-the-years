@@ -13,11 +13,11 @@ class MarketScene: SKScene {
 
     private let items: [MarketItem] = [
         MarketItem(id: "extra_life_pack", name: "Can Paketi", description: "+3 ekstra can (anında)", price: 50, icon: "♥", uses: 1),
-        MarketItem(id: "gold_magnet", name: "Altın Mıknatısı", description: "3 bölüm boyunca otomatik topla", price: 100, icon: "🧲", uses: 3),
-        MarketItem(id: "shield_start", name: "Başlangıç Kalkanı", description: "3 bölüm kalkanla başla", price: 75, icon: "🛡", uses: 3),
-        MarketItem(id: "double_coins", name: "Çift Altın", description: "5 bölüm 2x altın", price: 150, icon: "💰", uses: 5),
-        MarketItem(id: "robot_attack", name: "Robot Saldırısı", description: "3 bölüm robot saldırır", price: 200, icon: "⚡", uses: 3),
-        MarketItem(id: "extra_jump", name: "Çift Zıplama", description: "5 bölüm havada zıpla", price: 120, icon: "🦘", uses: 5),
+        MarketItem(id: "gold_magnet", name: "Altın Mıknatısı", description: "2 bölüm otomatik topla", price: 100, icon: "🧲", uses: 2),
+        MarketItem(id: "shield_start", name: "Başlangıç Kalkanı", description: "2 bölüm kalkanla başla", price: 75, icon: "🛡", uses: 2),
+        MarketItem(id: "double_coins", name: "Çift Altın", description: "2 bölüm 2x altın", price: 150, icon: "💰", uses: 2),
+        MarketItem(id: "robot_attack", name: "Robot Saldırısı", description: "2 bölüm robot saldırır", price: 200, icon: "⚡", uses: 2),
+        MarketItem(id: "extra_jump", name: "Çift Zıplama", description: "2 bölüm havada zıpla", price: 120, icon: "🦘", uses: 2),
     ]
 
     override func didMove(to view: SKView) {

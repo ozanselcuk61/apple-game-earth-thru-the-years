@@ -38,14 +38,12 @@ class ParallaxBackground {
 
     private func createSkyLayer(colors: EraColors) -> SKNode {
         let node = SKNode()
-        let skyWidth = sceneSize.width * 20 // Wide enough for longest levels
-        // Top half
-        let top = SKSpriteNode(color: colors.skyTop, size: CGSize(width: skyWidth, height: sceneSize.height / 2))
-        top.position = CGPoint(x: skyWidth / 2, y: sceneSize.height * 0.75)
+        // Sky is always screen-sized and follows camera
+        let top = SKSpriteNode(color: colors.skyTop, size: CGSize(width: sceneSize.width + 200, height: sceneSize.height / 2))
+        top.position = CGPoint(x: 0, y: sceneSize.height * 0.75)
         node.addChild(top)
-        // Bottom half
-        let bottom = SKSpriteNode(color: colors.skyBottom, size: CGSize(width: skyWidth, height: sceneSize.height / 2))
-        bottom.position = CGPoint(x: skyWidth / 2, y: sceneSize.height * 0.25)
+        let bottom = SKSpriteNode(color: colors.skyBottom, size: CGSize(width: sceneSize.width + 200, height: sceneSize.height / 2))
+        bottom.position = CGPoint(x: 0, y: sceneSize.height * 0.25)
         node.addChild(bottom)
         return node
     }
@@ -124,7 +122,12 @@ class ParallaxBackground {
 
     func update(cameraX: CGFloat) {
         for (layer, speed) in layers {
-            layer.position.x = -cameraX * speed
+            if speed == 0 {
+                // Sky follows camera exactly so it always fills screen
+                layer.position.x = cameraX
+            } else {
+                layer.position.x = -cameraX * speed
+            }
         }
     }
 }

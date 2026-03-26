@@ -21,7 +21,7 @@ class Coin: SKNode {
         addChild(visual)
 
         // Physics
-        let body = SKPhysicsBody(circleOfRadius: Constants.coinSize / 2)
+        let body = SKPhysicsBody(circleOfRadius: Constants.coinSize * 1.2) // Bigger hitbox for easy pickup
         body.categoryBitMask = PhysicsCategory.coin
         body.contactTestBitMask = PhysicsCategory.player
         body.collisionBitMask = PhysicsCategory.none
