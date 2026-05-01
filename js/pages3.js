@@ -330,95 +330,150 @@ function renderAIReport(container) {
 }
 
 function generateAIReport() {
-    const output = document.getElementById('aiReportOutput');
-    const project = getCurrentProject();
-    const partners = getCurrentPartners();
-    const wps = getCurrentWPs();
-    const diss = getCurrentDissemination();
-    const totalSpent = partners.reduce((s, p) => s + p.spent, 0);
-    const progress = getProjectProgress();
+    var output = document.getElementById('aiReportOutput');
+    var project = getCurrentProject();
+    var partners = getCurrentPartners();
+    var wps = getCurrentWPs();
+    var tasks = getCurrentTasks();
+    var diss = getCurrentDissemination();
 
-    output.innerHTML = `
-        <div class="card">
-            <div class="card-header" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff">
-                <h2 style="color:#fff"><i class="fas fa-robot"></i> AI Report Generator</h2>
-            </div>
-            <div class="card-body">
-                <div class="ai-generating" id="aiLoading">
-                    <div class="spinner"></div>
-                    <h3 style="color:var(--gray-800)">Generating your report...</h3>
-                    <p style="color:var(--gray-500)">Analyzing project data, compiling work package outputs, and generating narrative...</p>
-                    <div id="aiProgressSteps" style="margin-top:20px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto"></div>
-                </div>
-                <div id="aiReportContent" class="hidden ai-report-output"></div>
-            </div>
-        </div>
-    `;
+    // Get selected sections
+    var checkboxes = document.querySelectorAll('.ai-report-container input[type="checkbox"]');
+    var sectionLabels = ['Executive Summary','Work Package Progress','Budget Execution Summary','Partner Contributions','Dissemination & Impact','Quality Assurance','Challenges & Mitigations','Next Steps & Sustainability'];
+    var selectedSections = [];
+    checkboxes.forEach(function(cb, i) { if (cb.checked) selectedSections.push(sectionLabels[i]); });
 
-    const steps = ['Analyzing project structure...', 'Compiling WP deliverables...', 'Reviewing budget execution...', 'Processing dissemination data...', 'Generating narrative...', 'Formatting report...'];
-    let stepIdx = 0;
-    const stepsContainer = document.getElementById('aiProgressSteps');
+    var langSelect = document.querySelectorAll('.ai-report-container .form-select');
+    var language = langSelect.length > 1 ? langSelect[1].value : 'English';
 
-    const stepInterval = setInterval(() => {
+    output.innerHTML = '<div class="card"><div class="card-header" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff">' +
+        '<h2 style="color:#fff"><i class="fas fa-robot"></i> AI Report Generator</h2></div>' +
+        '<div class="card-body"><div class="ai-generating" id="aiLoading">' +
+        '<div class="spinner"></div><h3 style="color:var(--gray-800)">Generating your report with AI...</h3>' +
+        '<p style="color:var(--gray-500)">Claude is analyzing your project data and writing the report. This may take 30-60 seconds.</p>' +
+        '<div id="aiProgressSteps" style="margin-top:20px;text-align:left;max-width:400px;margin-left:auto;margin-right:auto"></div></div>' +
+        '<div id="aiReportContent" class="hidden ai-report-output"></div></div></div>';
+
+    // Show progress animation
+    var steps = ['Sending project data to AI...', 'Analyzing work packages...', 'Reviewing partner contributions...', 'Compiling dissemination metrics...', 'Writing report narrative...'];
+    var stepIdx = 0;
+    var stepsContainer = document.getElementById('aiProgressSteps');
+    var stepInterval = setInterval(function() {
         if (stepIdx < steps.length) {
-            stepsContainer.innerHTML += `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--success)"><i class="fas fa-check-circle"></i> ${steps[stepIdx]}</div>`;
+            stepsContainer.innerHTML += '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--success)"><i class="fas fa-check-circle"></i> ' + steps[stepIdx] + '</div>';
             stepIdx++;
-        } else {
-            clearInterval(stepInterval);
-            document.getElementById('aiLoading').classList.add('hidden');
-            const reportContent = document.getElementById('aiReportContent');
-            reportContent.classList.remove('hidden');
-            reportContent.innerHTML = generateReportHTML(project, partners, wps, diss, totalSpent, progress);
         }
-    }, 800);
+    }, 3000);
+
+    // Prepare project data for the Cloud Function
+    var projectData = {
+        id: project.id, name: project.name, programme: project.programme,
+        projectNumber: project.projectNumber, startDate: project.startDate,
+        endDate: project.endDate, duration: project.duration,
+        totalBudget: project.totalBudget, coordinator: project.coordinator,
+        coordinatorCountry: project.coordinatorCountry, description: project.description,
+        partners: partners, workPackages: wps, tasks: tasks, dissemination: diss
+    };
+
+    // Call Cloud Function
+    var apiUrl = 'https://us-central1-euproject-hub.cloudfunctions.net/generateReport';
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            userId: AppState.currentUser.id,
+            projectData: projectData,
+            sections: selectedSections,
+            language: language
+        })
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        clearInterval(stepInterval);
+        document.getElementById('aiLoading').classList.add('hidden');
+        var reportContent = document.getElementById('aiReportContent');
+        reportContent.classList.remove('hidden');
+
+        if (data.success && data.content) {
+            reportContent.innerHTML = formatAIReport(data.content, project);
+            addActivity(project.id, 'generated AI report for', project.name);
+            showToast('Report generated successfully!', 'success');
+        } else {
+            // Fallback to local generation
+            reportContent.innerHTML = generateLocalReport(project, partners, wps, diss, tasks);
+            showToast('Generated with local engine (Cloud Function unavailable)', 'info');
+        }
+    })
+    .catch(function(error) {
+        console.error('AI Report error:', error);
+        clearInterval(stepInterval);
+        document.getElementById('aiLoading').classList.add('hidden');
+        var reportContent = document.getElementById('aiReportContent');
+        reportContent.classList.remove('hidden');
+        // Fallback to local generation
+        reportContent.innerHTML = generateLocalReport(project, partners, wps, diss, tasks);
+        showToast('Generated with local engine (Cloud not available yet)', 'info');
+    });
 }
 
-function generateReportHTML(project, partners, wps, diss, totalSpent, progress) {
-    return `
-        <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:20px">
-            <button class="btn btn-sm btn-secondary"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            <button class="btn btn-sm btn-secondary"><i class="fas fa-file-word"></i> Export DOCX</button>
-            <button class="btn btn-sm btn-ghost"><i class="fas fa-copy"></i> Copy</button>
-        </div>
+function formatAIReport(markdownContent, project) {
+    // Simple markdown to HTML conversion
+    var html = markdownContent
+        .replace(/## (.*)/g, '<h3>$1</h3>')
+        .replace(/# (.*)/g, '<h2>$1</h2>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^- (.*)/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
 
-        <h3>Final Report: ${project.name}</h3>
-        <p><em>${project.programme} | Project No: ${project.projectNumber}</em></p>
-        <p><em>Report Period: ${formatDate(project.startDate)} - Present</em></p>
-
-        <h3>1. Executive Summary</h3>
-        <p>The ${project.name} project has made significant progress toward its objectives since its launch in ${formatDate(project.startDate)}. As of the current reporting period, overall project completion stands at <strong>${progress}%</strong>, with ${wps.filter(w=>w.status==='completed').length} out of ${wps.length} work packages fully completed.</p>
-        <p>The project consortium, comprising ${partners.length} partner organizations across ${[...new Set(partners.map(p=>p.country))].length} countries, has maintained effective collaboration throughout the implementation period. Total budget utilization has reached ${formatCurrency(totalSpent)} out of the ${formatCurrency(project.totalBudget)} lump-sum grant (${Math.round(totalSpent/project.totalBudget*100)}%).</p>
-
-        <h3>2. Work Package Progress</h3>
-        ${wps.map(wp => `
-            <p><strong>${wp.number}: ${wp.title}</strong> (Lead: ${wp.lead})</p>
-            <p>Status: <strong>${wp.status}</strong> | Progress: <strong>${wp.progress}%</strong> | Budget: ${formatCurrency(wp.budget)}</p>
-            <p>${wp.description}</p>
-            <ul>${wp.deliverables.map(d => `<li>${d} ${wp.progress === 100 ? '(Completed)' : wp.progress > 50 ? '(In Progress)' : '(Planned)'}</li>`).join('')}</ul>
-        `).join('')}
-
-        <h3>3. Budget Execution Summary</h3>
-        <p>The project operates under the EU lump-sum funding model with a total grant of <strong>${formatCurrency(project.totalBudget)}</strong>. Budget execution is linked to work package completion rather than actual cost reporting.</p>
-        <ul>
-            ${partners.map(p => `<li><strong>${p.name}</strong> (${p.country}): Allocated ${formatCurrency(p.budget)}, Utilized ${formatCurrency(p.spent)} (${Math.round(p.spent/p.budget*100)}%)</li>`).join('')}
-        </ul>
-        <p>Total project expenditure to date: <strong>${formatCurrency(totalSpent)}</strong> (${Math.round(totalSpent/project.totalBudget*100)}% of total grant).</p>
-
-        <h3>4. Partner Contributions</h3>
-        ${partners.map(p => `<p><strong>${p.name}</strong> (${p.country}, ${p.role}): ${p.contact} has been actively contributing to assigned work packages with a budget utilization rate of ${Math.round(p.spent/p.budget*100)}%.</p>`).join('')}
-
-        <h3>5. Dissemination & Impact</h3>
-        <p>The project has conducted <strong>${diss.summary.events || 0} dissemination events</strong> and produced <strong>${diss.summary.publications || 0} publications</strong>. Social media activities have reached an estimated audience of <strong>${(diss.summary.socialReach || 0).toLocaleString()} people</strong>, while the project website has attracted <strong>${(diss.summary.website_visits || 0).toLocaleString()} visits</strong>.</p>
-        <p>Key dissemination activities include:</p>
-        <ul>${(diss.activities || []).slice(0, 5).map(a => `<li>${a.title} (${a.type}, ${formatDate(a.date)}) — Reach: ${a.reach.toLocaleString()}</li>`).join('')}</ul>
-
-        <h3>6. Challenges & Mitigations</h3>
-        <p>The consortium has encountered typical challenges associated with transnational project management, including coordination across time zones, varying institutional processes, and adapting to post-pandemic hybrid working models. These challenges have been effectively mitigated through regular online coordination meetings, clear communication protocols established in the Project Management Handbook, and flexible timeline adjustments where necessary.</p>
-
-        <hr style="margin:24px 0;border:none;border-top:1px solid var(--gray-200)">
-        <p style="font-size:12px;color:var(--gray-400)"><em>This report was generated by EUProject Hub AI Assistant on ${new Date().toLocaleDateString('en-GB')}. Please review and edit as needed before submission.</em></p>
-    `;
+    return '<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:20px">' +
+        '<button class="btn btn-sm btn-secondary" onclick="copyReport()"><i class="fas fa-copy"></i> Copy</button>' +
+        '<button class="btn btn-sm btn-primary" onclick="window.print()"><i class="fas fa-file-pdf"></i> Print / Save PDF</button></div>' +
+        '<p>' + html + '</p>' +
+        '<hr style="margin:24px 0;border:none;border-top:1px solid var(--gray-200)">' +
+        '<p style="font-size:12px;color:var(--gray-400)"><em>Generated by EUProject Hub AI (Claude) on ' + new Date().toLocaleDateString('en-GB') + '. Review and edit before submission.</em></p>';
 }
+
+function copyReport() {
+    var content = document.getElementById('aiReportContent');
+    if (content) {
+        navigator.clipboard.writeText(content.innerText).then(function() {
+            showToast('Report copied to clipboard!', 'success');
+        });
+    }
+}
+
+function generateLocalReport(project, partners, wps, diss, tasks) {
+    var progress = getProjectProgress();
+    var totalSpent = partners.reduce(function(s, p) { return s + (p.spent || 0); }, 0);
+    var countries = []; partners.forEach(function(p) { if (p.country && countries.indexOf(p.country) === -1) countries.push(p.country); });
+
+    return '<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:20px">' +
+        '<button class="btn btn-sm btn-secondary" onclick="copyReport()"><i class="fas fa-copy"></i> Copy</button>' +
+        '<button class="btn btn-sm btn-primary" onclick="window.print()"><i class="fas fa-file-pdf"></i> Print / Save PDF</button></div>' +
+        '<h3>Final Report: ' + project.name + '</h3>' +
+        '<p><em>' + (project.programme || '') + ' | Project No: ' + (project.projectNumber || 'N/A') + '</em></p>' +
+        '<h3>1. Executive Summary</h3>' +
+        '<p>The ' + project.name + ' project has made significant progress since its launch in ' + formatDate(project.startDate) + '. Overall completion stands at <strong>' + progress + '%</strong>, with ' + wps.filter(function(w) { return w.status === 'completed'; }).length + ' out of ' + wps.length + ' work packages completed.</p>' +
+        '<p>The consortium comprises ' + partners.length + ' organizations across ' + countries.length + ' countries, with a total lump-sum grant of ' + formatCurrency(project.totalBudget) + '.</p>' +
+        '<h3>2. Work Package Progress</h3>' +
+        wps.map(function(wp) {
+            return '<p><strong>' + (wp.number || '') + ': ' + wp.title + '</strong> — Progress: ' + (wp.progress || 0) + '%, Lead: ' + (wp.lead || 'N/A') + ', Budget: ' + formatCurrency(wp.budget) + '</p>' +
+            '<p>' + (wp.description || '') + '</p>';
+        }).join('') +
+        '<h3>3. Budget Execution</h3>' +
+        '<p>Total grant: ' + formatCurrency(project.totalBudget) + ' (lump-sum model). Utilization: ' + formatCurrency(totalSpent) + ' (' + (project.totalBudget ? Math.round(totalSpent / project.totalBudget * 100) : 0) + '%).</p>' +
+        '<h3>4. Partners</h3>' +
+        partners.map(function(p) { return '<p><strong>' + p.name + '</strong> (' + (p.country || '') + ', ' + (p.role || 'partner') + ') — Budget: ' + formatCurrency(p.budget) + '</p>'; }).join('') +
+        '<h3>5. Dissemination</h3>' +
+        '<p>Events: ' + (diss.summary?.events || 0) + ', Publications: ' + (diss.summary?.publications || 0) + ', Social reach: ' + (diss.summary?.socialReach || 0) + '</p>' +
+        '<hr style="margin:24px 0;border:none;border-top:1px solid var(--gray-200)">' +
+        '<p style="font-size:12px;color:var(--gray-400)"><em>Local report — deploy Cloud Functions for AI-powered reports. Generated on ' + new Date().toLocaleDateString('en-GB') + '.</em></p>';
+}
+
+// Old generateReportHTML removed — replaced by generateLocalReport and formatAIReport above
 
 // ---- SETTINGS ----
 function renderSettings(container) {
