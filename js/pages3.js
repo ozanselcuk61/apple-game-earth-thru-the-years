@@ -422,7 +422,11 @@ function generateReportHTML(project, partners, wps, diss, totalSpent, progress) 
 
 // ---- SETTINGS ----
 function renderSettings(container) {
-    const user = AppState.currentUser;
+    var user = AppState.currentUser;
+    var isPremium = user.plan === 'premium';
+    var daysLeft = getTrialDaysRemaining();
+    var names = (user.name || '').split(' ');
+
     container.innerHTML = `
         <div class="page-header"><h1>Settings</h1></div>
         <div class="content-grid">
@@ -431,7 +435,7 @@ function renderSettings(container) {
                     <div class="card-header"><h2><i class="fas fa-user"></i> Profile</h2></div>
                     <div class="card-body">
                         <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
-                            <div class="user-avatar large">${user.initials}</div>
+                            <div class="user-avatar large">${user.photoURL ? '<img src="' + user.photoURL + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover">' : user.initials}</div>
                             <div>
                                 <div style="font-size:18px;font-weight:700">${user.name}</div>
                                 <div style="font-size:14px;color:var(--gray-500)">${user.email}</div>
@@ -439,12 +443,12 @@ function renderSettings(container) {
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" value="Ozan"></div>
-                            <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" value="Selcuk"></div>
+                            <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="setFirstName" value="${names[0] || ''}"></div>
+                            <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="setLastName" value="${names.slice(1).join(' ') || ''}"></div>
                         </div>
-                        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" value="${user.email}"></div>
-                        <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" value="University"></div>
-                        <button class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+                        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" value="${user.email}" disabled></div>
+                        <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" id="setOrg" value="${user.organization || ''}"></div>
+                        <button class="btn btn-primary" onclick="saveProfile()"><i class="fas fa-save"></i> Save Changes</button>
                     </div>
                 </div>
 
@@ -465,14 +469,37 @@ function renderSettings(container) {
                 <div class="card mb-6">
                     <div class="card-header"><h2><i class="fas fa-crown"></i> Subscription</h2></div>
                     <div class="card-body" style="text-align:center">
+                        ${isPremium ? `
                         <div style="font-size:12px;font-weight:600;color:var(--success);text-transform:uppercase;margin-bottom:8px">Current Plan</div>
                         <div style="font-size:28px;font-weight:800;color:var(--primary);margin-bottom:4px">Premium</div>
                         <div style="font-size:16px;color:var(--gray-600);margin-bottom:16px">€15 / month</div>
                         <div style="padding:12px;background:var(--success-light);border-radius:var(--radius);margin-bottom:16px">
                             <div style="font-size:13px;color:#065f46"><i class="fas fa-check-circle"></i> All features unlocked</div>
                         </div>
-                        <div style="font-size:12px;color:var(--gray-400)">Next billing: 25 Apr 2026</div>
-                        <button class="btn btn-secondary btn-block mt-4">Manage Subscription</button>
+                        <button class="btn btn-secondary btn-block" onclick="openCustomerPortal()">Manage Subscription</button>
+                        ` : `
+                        <div style="font-size:12px;font-weight:600;color:var(--warning);text-transform:uppercase;margin-bottom:8px">Current Plan</div>
+                        <div style="font-size:28px;font-weight:800;color:var(--gray-800);margin-bottom:4px">Free Trial</div>
+                        <div style="font-size:16px;color:var(--gray-600);margin-bottom:16px">${daysLeft > 0 ? daysLeft + ' days remaining' : 'Trial expired'}</div>
+                        <div style="padding:16px;background:${daysLeft > 0 ? 'var(--warning-light)' : 'var(--danger-light)'};border-radius:var(--radius);margin-bottom:16px">
+                            <div style="font-size:13px;color:${daysLeft > 0 ? '#92400e' : '#991b1b'}">
+                                <i class="fas ${daysLeft > 0 ? 'fa-clock' : 'fa-exclamation-triangle'}"></i>
+                                ${daysLeft > 0 ? 'Your trial ends in ' + daysLeft + ' days' : 'Your trial has expired. Upgrade to continue.'}
+                            </div>
+                        </div>
+                        <div style="background:var(--gray-50);border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:left">
+                            <div style="font-size:16px;font-weight:700;margin-bottom:12px;text-align:center">Premium — €15/month</div>
+                            <div style="font-size:13px;color:var(--gray-600);line-height:2">
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> Unlimited projects</div>
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> Unlimited partners</div>
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> 25 GB storage</div>
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> Unlimited AI reports</div>
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> PDF & DOCX export</div>
+                                <div><i class="fas fa-check" style="color:var(--success);margin-right:8px"></i> Priority support</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-lg" onclick="startCheckout()"><i class="fas fa-credit-card"></i> Upgrade to Premium</button>
+                        `}
                     </div>
                 </div>
 
@@ -488,4 +515,28 @@ function renderSettings(container) {
             </div>
         </div>
     `;
+}
+
+function saveProfile() {
+    var firstName = document.getElementById('setFirstName').value.trim();
+    var lastName = document.getElementById('setLastName').value.trim();
+    var org = document.getElementById('setOrg').value.trim();
+    var fullName = firstName + (lastName ? ' ' + lastName : '');
+
+    var uid = AppState.currentUser.id;
+    db.collection('users').doc(uid).update({
+        firstName: firstName,
+        lastName: lastName,
+        organization: org
+    }).then(function() {
+        var firebaseUser = auth.currentUser;
+        if (firebaseUser) { firebaseUser.updateProfile({ displayName: fullName }); }
+        AppState.currentUser.name = fullName;
+        AppState.currentUser.organization = org;
+        AppState.currentUser.initials = (firstName[0] || '').toUpperCase() + (lastName[0] || '').toUpperCase();
+        updateUserUI();
+        showToast('Profile updated!', 'success');
+    }).catch(function(e) {
+        showToast('Error saving profile: ' + e.message, 'error');
+    });
 }
