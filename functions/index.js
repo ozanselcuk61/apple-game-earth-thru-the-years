@@ -1,14 +1,14 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors")({ origin: true });
-const Anthropic = require("@anthropic-ai/sdk");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const Stripe = require("stripe");
 
 admin.initializeApp();
 const db = admin.firestore();
 
 // ---- CONFIG ----
-const ANTHROPIC_API_KEY = functions.config().anthropic?.key || "";
+const GEMINI_API_KEY = functions.config().gemini?.key || "";
 const STRIPE_SECRET_KEY = functions.config().stripe?.secret || "";
 const STRIPE_PRICE_ID = functions.config().stripe?.price_id || "price_1TS4jk5lr58PCaKEKvt9wVDE";
 
@@ -38,7 +38,8 @@ exports.generateReport = functions.https.onRequest((req, res) => {
         return res.status(403).json({ error: "Upgrade to Premium to generate reports" });
       }
 
-      const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
+      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const selectedSections = sections || [
         "Executive Summary",
@@ -51,18 +52,8 @@ exports.generateReport = functions.https.onRequest((req, res) => {
 
       const prompt = buildReportPrompt(projectData, selectedSections, language || "English");
 
-      const message = await client.messages.create({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4000,
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-      });
-
-      const reportText = message.content[0].text;
+      const result = await model.generateContent(prompt);
+      const reportText = result.response.text();
 
       // Save report to Firestore
       const reportRef = await db
