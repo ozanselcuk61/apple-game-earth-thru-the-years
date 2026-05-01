@@ -119,7 +119,7 @@
                     </button>
                     <button class="sidebar-link" data-page="projects">
                         <i class="fas fa-project-diagram"></i> My Projects
-                        <span class="badge">2</span>
+                        <span class="badge" id="badgeProjects">0</span>
                     </button>
                 </div>
 
@@ -136,7 +136,7 @@
                     </button>
                     <button class="sidebar-link" data-page="tasks">
                         <i class="fas fa-tasks"></i> Tasks
-                        <span class="badge">5</span>
+                        <span class="badge" id="badgeTasks">0</span>
                     </button>
                     <button class="sidebar-link" data-page="documents">
                         <i class="fas fa-folder-open"></i> Documents
@@ -165,8 +165,7 @@
 
             <div class="sidebar-project-select">
                 <select class="project-selector" id="projectSelector">
-                    <option value="buildres">BuildRes (KA220)</option>
-                    <option value="yourein">You'ReIn (KA220)</option>
+                    <option value="">No projects yet</option>
                 </select>
             </div>
         </aside>
