@@ -395,7 +395,7 @@ function openUploadModal() {
         '<div class="form-group"><label class="form-label">Destination Folder</label>' +
         '<select class="form-select" id="uploadFolder">' + folderOptions + '</select></div>' +
         '<div class="drop-zone" id="modalDropZone" style="margin-bottom:16px">' +
-        '<i class="fas fa-cloud-upload-alt"></i><br><strong>Click to select files or drag & drop</strong><br>' +
+        '<i class="fas fa-cloud-upload-alt"></i><br><strong>Click here to select files</strong><br>' +
         '<span style="font-size:13px;color:var(--gray-400)">PDF, DOCX, XLSX, images, ZIP — max 50MB each</span></div>' +
         '<div id="uploadFileList"></div>' +
         '<div id="uploadProgressArea"></div>' +
@@ -403,21 +403,31 @@ function openUploadModal() {
         '<button class="btn btn-secondary" onclick="closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" id="uploadBtn" onclick="startUpload()" disabled><i class="fas fa-upload"></i> Upload</button>');
 
-    // Setup modal drop zone
-    setTimeout(function() {
+    // Setup modal drop zone with retry
+    function setupModalDropZone() {
         var mZone = document.getElementById('modalDropZone');
         var fInput = document.getElementById('fileInput');
-        if (!mZone || !fInput) return;
+        if (!mZone || !fInput) {
+            setTimeout(setupModalDropZone, 200);
+            return;
+        }
 
-        mZone.addEventListener('click', function() { fInput.click(); });
-        mZone.addEventListener('dragover', function(e) { e.preventDefault(); mZone.classList.add('dragover'); });
-        mZone.addEventListener('dragleave', function() { mZone.classList.remove('dragover'); });
-        mZone.addEventListener('drop', function(e) {
+        mZone.onclick = function(e) {
+            e.preventDefault();
+            fInput.value = '';
+            fInput.click();
+        };
+        mZone.ondragover = function(e) { e.preventDefault(); mZone.classList.add('dragover'); };
+        mZone.ondragleave = function() { mZone.classList.remove('dragover'); };
+        mZone.ondrop = function(e) {
             e.preventDefault(); mZone.classList.remove('dragover');
             handleFileSelection(e.dataTransfer.files);
-        });
-        fInput.addEventListener('change', function() { handleFileSelection(fInput.files); });
-    }, 100);
+        };
+        fInput.onchange = function() {
+            if (fInput.files.length > 0) handleFileSelection(fInput.files);
+        };
+    }
+    setTimeout(setupModalDropZone, 50);
 }
 
 var selectedFiles = [];
@@ -440,8 +450,10 @@ function handleFileSelection(files) {
 }
 
 function startUpload() {
-    if (selectedFiles.length === 0) return;
-    var folderId = document.getElementById('uploadFolder').value;
+    if (selectedFiles.length === 0) { showToast('No files selected', 'error'); return; }
+    var folderSelect = document.getElementById('uploadFolder');
+    var folderId = folderSelect ? folderSelect.value : currentFolderId;
+    if (!folderId) { showToast('Select a folder', 'error'); return; }
     var pid = AppState.currentProjectId;
     var uid = AppState.currentUser.id;
     var progressArea = document.getElementById('uploadProgressArea');
