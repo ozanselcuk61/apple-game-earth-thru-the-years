@@ -132,6 +132,7 @@ function showApp() {
     updateUserUI();
     handlePaymentSuccess();
     checkTrialStatus();
+    checkPendingInvites();
 
     if (!window.location.hash.startsWith('#page-')) {
         window.location.hash = '#page-dashboard';
