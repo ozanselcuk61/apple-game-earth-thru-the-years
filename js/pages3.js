@@ -600,6 +600,7 @@ function renderSettings(container) {
                         </div>
                         <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" value="${user.email}" disabled></div>
                         <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" id="setOrg" value="${user.organization || ''}"></div>
+                        <div class="form-group"><label class="form-label">Language</label>${typeof getLanguageSelector === 'function' ? getLanguageSelector() : ''}</div>
                         <button class="btn btn-primary" onclick="saveProfile()"><i class="fas fa-save"></i> Save Changes</button>
                     </div>
                 </div>
