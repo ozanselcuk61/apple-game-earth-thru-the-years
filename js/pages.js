@@ -230,10 +230,11 @@ function openNewProjectModal() {
         '<option>Erasmus+ KA171</option><option>Erasmus+ Sport</option><option>Other EU Programme</option></optgroup>' +
         '</select></div>' +
         '<div class="form-group"><label class="form-label">Grant Amount (Lump Sum)</label>' +
-        '<select class="form-select" id="npGrant">' +
+        '<select class="form-select" id="npGrant" onchange="toggleCustomGrant()">' +
         '<option value="30000">€30,000</option><option value="60000">€60,000</option>' +
         '<option value="120000">€120,000</option><option value="250000" selected>€250,000</option><option value="400000">€400,000</option>' +
-        '<option value="0">Custom (enter manually)</option></select></div></div>' +
+        '<option value="custom">Custom amount</option></select>' +
+        '<input type="number" class="form-input mt-4" id="npGrantCustom" placeholder="Enter amount in EUR (e.g. 28300)" style="display:none"></div></div>' +
         '<div class="form-row"><div class="form-group"><label class="form-label">Start Date</label>' +
         '<input type="date" class="form-input" id="npStart"></div>' +
         '<div class="form-group"><label class="form-label">Duration (months)</label>' +
@@ -252,11 +253,23 @@ function updateGrantOptions() {
     if (!prog || !grant) return;
     var val = prog.value;
     if (val.indexOf('KA210') >= 0) {
-        grant.value = '60000';
+        grant.value = '30000';
     } else if (val.indexOf('KA152') >= 0 || val.indexOf('KA153') >= 0 || val.indexOf('KA154') >= 0) {
-        grant.value = '60000';
+        grant.value = 'custom';
     } else if (val.indexOf('KA220') >= 0) {
         grant.value = '250000';
+    }
+    toggleCustomGrant();
+}
+
+function toggleCustomGrant() {
+    var grant = document.getElementById('npGrant') || document.getElementById('epGrant');
+    var customField = document.getElementById('npGrantCustom') || document.getElementById('epGrantCustom');
+    if (!grant) return;
+    if (grant.value === 'custom') {
+        if (customField) customField.style.display = 'block';
+    } else {
+        if (customField) customField.style.display = 'none';
     }
 }
 
@@ -265,7 +278,8 @@ function handleCreateProject() {
     if (!name) { alert('Please enter a project name.'); return; }
 
     var programme = document.getElementById('npProgramme').value;
-    var totalBudget = parseInt(document.getElementById('npGrant').value);
+    var grantVal = document.getElementById('npGrant').value;
+    var totalBudget = grantVal === 'custom' ? parseInt(document.getElementById('npGrantCustom').value) || 0 : parseInt(grantVal);
     var startDate = document.getElementById('npStart').value || new Date().toISOString().split('T')[0];
     var duration = parseInt(document.getElementById('npDuration').value);
     var projectNumber = document.getElementById('npNumber').value.trim();
@@ -394,9 +408,10 @@ function openEditProjectModal() {
             }).join('') + '</optgroup>';
         }).join('') + '</select></div>' +
         '<div class="form-group"><label class="form-label">Grant Amount (Lump Sum)</label>' +
-        '<select class="form-select" id="epGrant">' + grantOptions.map(function(g) {
+        '<select class="form-select" id="epGrant" onchange="toggleCustomGrant()">' + grantOptions.map(function(g) {
             return '<option value="' + g.v + '"' + (p.totalBudget === g.v ? ' selected' : '') + '>' + g.l + '</option>';
-        }).join('') + '</select></div></div>' +
+        }).join('') + '<option value="custom"' + (grantOptions.every(function(g) { return g.v !== p.totalBudget; }) ? ' selected' : '') + '>Custom amount</option></select>' +
+        '<input type="number" class="form-input mt-4" id="epGrantCustom" value="' + (grantOptions.every(function(g) { return g.v !== p.totalBudget; }) ? p.totalBudget : '') + '" placeholder="Enter amount in EUR" style="display:' + (grantOptions.every(function(g) { return g.v !== p.totalBudget; }) ? 'block' : 'none') + '"></div></div>' +
         '<div class="form-row"><div class="form-group"><label class="form-label">Start Date</label>' +
         '<input type="date" class="form-input" id="epStart" value="' + (p.startDate || '') + '"></div>' +
         '<div class="form-group"><label class="form-label">Duration (months)</label>' +
@@ -429,7 +444,7 @@ function saveEditProject() {
     var updates = {
         name: document.getElementById('epName').value.trim(),
         programme: document.getElementById('epProgramme').value,
-        totalBudget: parseInt(document.getElementById('epGrant').value),
+        totalBudget: document.getElementById('epGrant').value === 'custom' ? parseInt(document.getElementById('epGrantCustom').value) || 0 : parseInt(document.getElementById('epGrant').value),
         startDate: startDate,
         endDate: endDate,
         duration: duration,
