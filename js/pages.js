@@ -302,7 +302,7 @@ function renderOverview(container) {
         '<div class="stat-card-value" style="font-size:18px">' + (p.programme || 'N/A') + '</div>' +
         '<div class="stat-card-change">' + (p.projectNumber || '') + '</div></div>' +
         '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-label">Duration</span></div>' +
-        '<div class="stat-card-value">' + elapsed + '/' + (p.duration || 0) + '</div><div class="stat-card-change">months elapsed</div></div>' +
+        '<div class="stat-card-value">' + elapsed + '/' + (p.duration || 0) + '</div><div class="stat-card-change">' + (elapsed === 0 ? (parseDate(p.startDate) && parseDate(p.startDate) > new Date() ? 'starts ' + formatDate(p.startDate) : 'months elapsed') : 'months elapsed') + '</div></div>' +
         '<div class="stat-card"><div class="stat-card-header"><span class="stat-card-label">Progress</span></div>' +
         '<div class="stat-card-value">' + progress + '%</div>' +
         '<div class="progress-bar mt-4"><div class="progress-fill" style="width:' + progress + '%"></div></div></div>' +
