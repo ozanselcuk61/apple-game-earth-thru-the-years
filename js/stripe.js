@@ -121,9 +121,9 @@ function startCheckout(planType) {
 
     // Map plan to Stripe price ID (you'll need to create these in Stripe)
     var planPriceMap = {
-        'standard': STRIPE_PRICE_ID, // Update with actual Stripe price IDs
-        'plus': STRIPE_PRICE_ID,
-        'premium': STRIPE_PRICE_ID
+        'standard': 'price_1TUTy15lr58PCaKE7Wb5fRYE',
+        'plus': 'price_1TS4jk5lr58PCaKEKvt9wVDE',
+        'premium': 'price_1TUTyJ5lr58PCaKEWftV7HAy'
     };
     var selectedPlan = planType || 'plus';
     var selectedPriceId = planPriceMap[selectedPlan] || STRIPE_PRICE_ID;
